@@ -1,4 +1,3 @@
-using TriPower;
 using TriPower.Identity.Application;
 using TriPower.Identity.Application.Shared;
 using TriPower.Identity.IoC;
@@ -10,6 +9,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents()
     .AddInteractiveWebAssemblyComponents();
+
+builder.Services.AddMudServices();
 
 builder.Services.AddTriHandlerMediatorForServer();
 builder.Services.AddTriIdentityInfrastructure(builder.Configuration);
