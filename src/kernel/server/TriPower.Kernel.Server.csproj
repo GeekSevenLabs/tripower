@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <LangVersion>preview</LangVersion>
+        <RootNamespace>TriPower</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <FrameworkReference Include="Microsoft.AspNetCore.App"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <SupportedPlatform Include="browser"/>
+    </ItemGroup>
+
+    <ItemGroup>
+<!--        <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="10.0.0-preview.6.25358.103"/>-->
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="10.0.0-preview.6.25358.103"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Folder Include="wwwroot\"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\application\TriPower.Kernel.Application.csproj"/>
+    </ItemGroup>
+
+</Project>

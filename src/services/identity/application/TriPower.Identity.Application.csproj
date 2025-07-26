@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <LangVersion>preview</LangVersion>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\kernel\application\TriPower.Kernel.Application.csproj" />
+      <ProjectReference Include="..\application.shared\TriPower.Identity.Application.Shared.csproj" />
+      <ProjectReference Include="..\domain\TriPower.Identity.Domain.csproj" />
+    </ItemGroup>
+
+</Project>
