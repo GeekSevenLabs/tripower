@@ -5,7 +5,7 @@ public partial class TriContainer : TriComponentBase
 {
     private string CssClasses => CssBuilder
         .Default(Class)
-        .AddClass("py-4")
+        .AddClass("tw:!py-10")
         .Build();
     
     [Parameter, EditorRequired] public required RenderFragment ChildContent { get; set; }
