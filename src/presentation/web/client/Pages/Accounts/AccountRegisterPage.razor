@@ -2,6 +2,38 @@
 
 <TriPage Title="Sign Up">
     <Body>
-        TODO: form here
+    
+    <TriEditForm Model="_request" Validator="_validator" >
+        
+        @* <TriSection> *@
+        @*      *@
+        @*     <TriStack Row Justify="Justify.SpaceBetween" AlignItems="AlignItems.End" Wrap="Wrap.Wrap" Spacing="6"> *@
+        @*         <MudText Typo="Typo.h2">Dados do Usuário</MudText> *@
+        @*         <div> *@
+        @*             @CommandBar *@
+        @*         </div> *@
+        @*     </TriStack> *@
+            
+            <MudTextField @bind-Value="_request.FirstName" Label="Nome" />
+            <MudTextField @bind-Value="_request.LastName" Label="Sobrenome" />
+            <MudTextField @bind-Value="_request.Email" Label="E-mail" />
+            <MudTextField @bind-Value="_request.Password" Label="Senha" InputType="InputType.Password" />
+            <MudTextField @bind-Value="_request.ConfirmPassword" Label="Confirmação de Senha" InputType="InputType.Password" />
+            
+        @* </TriSection> *@
+        
+        
+        <TriStack Row Reverse>
+            
+            <MudButton 
+                Variant="Variant.Filled" Color="Color.Primary" ButtonType="ButtonType.Submit"
+                StartIcon="@Icons.Material.Filled.Save">
+                Gravar
+            </MudButton>
+            
+        </TriStack>
+        
+    </TriEditForm>
+    
     </Body>
 </TriPage>

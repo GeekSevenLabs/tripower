@@ -157,6 +157,48 @@
   }
 }
 @layer utilities {
+  .tw\:flex {
+    display: flex;
+  }
+  .tw\:flex-col {
+    flex-direction: column;
+  }
+  .tw\:flex-col-reverse {
+    flex-direction: column-reverse;
+  }
+  .tw\:flex-row {
+    flex-direction: row;
+  }
+  .tw\:flex-row-reverse {
+    flex-direction: row-reverse;
+  }
+  .tw\:flex-nowrap {
+    flex-wrap: nowrap;
+  }
+  .tw\:flex-wrap {
+    flex-wrap: wrap;
+  }
+  .tw\:flex-wrap-reverse {
+    flex-wrap: wrap-reverse;
+  }
+  .tw\:gap-0 {
+    gap: calc(var(--tw-spacing) * 0);
+  }
+  .tw\:gap-2 {
+    gap: calc(var(--tw-spacing) * 2);
+  }
+  .tw\:gap-4 {
+    gap: calc(var(--tw-spacing) * 4);
+  }
+  .tw\:gap-6 {
+    gap: calc(var(--tw-spacing) * 6);
+  }
+  .tw\:gap-8 {
+    gap: calc(var(--tw-spacing) * 8);
+  }
+  .tw\:gap-10 {
+    gap: calc(var(--tw-spacing) * 10);
+  }
   .tw\:\!py-6 {
     padding-block: calc(var(--tw-spacing) * 6) !important;
   }

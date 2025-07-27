@@ -14,7 +14,7 @@
     </ItemGroup>
 
     <ItemGroup>
-<!--        <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="10.0.0-preview.6.25358.103"/>-->
+        <PackageReference Include="BlazorDevKit.FluentValidation" Version="0.61.6" />
         <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="10.0.0-preview.6.25358.103"/>
         <PackageReference Include="MudBlazor" Version="8.10.0" />
     </ItemGroup>
