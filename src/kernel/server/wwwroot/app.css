@@ -157,6 +157,12 @@
   }
 }
 @layer utilities {
+  .tw\:\!mt-6 {
+    margin-top: calc(var(--tw-spacing) * 6) !important;
+  }
+  .tw\:\!mb-4 {
+    margin-bottom: calc(var(--tw-spacing) * 4) !important;
+  }
   .tw\:flex {
     display: flex;
   }
@@ -181,6 +187,39 @@
   .tw\:flex-wrap-reverse {
     flex-wrap: wrap-reverse;
   }
+  .tw\:items-baseline {
+    align-items: baseline;
+  }
+  .tw\:items-center {
+    align-items: center;
+  }
+  .tw\:items-end {
+    align-items: flex-end;
+  }
+  .tw\:items-start {
+    align-items: flex-start;
+  }
+  .tw\:items-stretch {
+    align-items: stretch;
+  }
+  .tw\:justify-around {
+    justify-content: space-around;
+  }
+  .tw\:justify-between {
+    justify-content: space-between;
+  }
+  .tw\:justify-center {
+    justify-content: center;
+  }
+  .tw\:justify-end {
+    justify-content: flex-end;
+  }
+  .tw\:justify-evenly {
+    justify-content: space-evenly;
+  }
+  .tw\:justify-start {
+    justify-content: flex-start;
+  }
   .tw\:gap-0 {
     gap: calc(var(--tw-spacing) * 0);
   }
@@ -199,6 +238,15 @@
   .tw\:gap-10 {
     gap: calc(var(--tw-spacing) * 10);
   }
+  .tw\:\!px-6 {
+    padding-inline: calc(var(--tw-spacing) * 6) !important;
+  }
+  .tw\:\!py-3 {
+    padding-block: calc(var(--tw-spacing) * 3) !important;
+  }
+  .tw\:\!py-4 {
+    padding-block: calc(var(--tw-spacing) * 4) !important;
+  }
   .tw\:\!py-6 {
     padding-block: calc(var(--tw-spacing) * 6) !important;
   }
@@ -207,6 +255,9 @@
   }
   .tw\:py-6 {
     padding-block: calc(var(--tw-spacing) * 6);
+  }
+  .tw\:\!pt-6 {
+    padding-top: calc(var(--tw-spacing) * 6) !important;
   }
 }
 html {

@@ -5,25 +5,27 @@
     
     <TriEditForm Model="_request" Validator="_validator" >
         
-        @* <TriSection> *@
-        @*      *@
-        @*     <TriStack Row Justify="Justify.SpaceBetween" AlignItems="AlignItems.End" Wrap="Wrap.Wrap" Spacing="6"> *@
-        @*         <MudText Typo="Typo.h2">Dados do Usuário</MudText> *@
-        @*         <div> *@
-        @*             @CommandBar *@
-        @*         </div> *@
-        @*     </TriStack> *@
+        <TriSection Label="Suas informações">
             
-            <MudTextField @bind-Value="_request.FirstName" Label="Nome" />
-            <MudTextField @bind-Value="_request.LastName" Label="Sobrenome" />
-            <MudTextField @bind-Value="_request.Email" Label="E-mail" />
-            <MudTextField @bind-Value="_request.Password" Label="Senha" InputType="InputType.Password" />
-            <MudTextField @bind-Value="_request.ConfirmPassword" Label="Confirmação de Senha" InputType="InputType.Password" />
+            <Content>
+                <TriTextField @bind-Value="_request.FirstName" Label="Nome" />
+                <TriTextField @bind-Value="_request.LastName" Label="Sobrenome" />
+            </Content>
             
-        @* </TriSection> *@
+        </TriSection>
+        
+        <TriSection Label="Usuário">
+            
+            <Content>
+                <TriTextField @bind-Value="_request.Email" Label="E-mail" />
+                <TriTextField @bind-Value="_request.Password" Label="Senha" InputType="InputType.Password" />
+                <TriTextField @bind-Value="_request.ConfirmPassword" Label="Confirmação de Senha" InputType="InputType.Password" />
+            </Content>
+            
+        </TriSection>
         
         
-        <TriStack Row Reverse>
+        <TriCommandBar BackLink="/">
             
             <MudButton 
                 Variant="Variant.Filled" Color="Color.Primary" ButtonType="ButtonType.Submit"
@@ -31,7 +33,7 @@
                 Gravar
             </MudButton>
             
-        </TriStack>
+        </TriCommandBar>
         
     </TriEditForm>
     

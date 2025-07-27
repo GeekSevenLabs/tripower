@@ -12,6 +12,17 @@ public partial class TriStack : TriComponentBase
         .AddClass("tw:flex-wrap", Wrap == TriWrap.Wrap)
         .AddClass("tw:flex-nowrap", Wrap == TriWrap.NoWrap)
         .AddClass("tw:flex-wrap-reverse", Wrap == TriWrap.WrapReverse)
+        .AddClass("tw:justify-start", Justify == TriJustify.Start)
+        .AddClass("tw:justify-end", Justify == TriJustify.End)
+        .AddClass("tw:justify-center", Justify == TriJustify.Center)
+        .AddClass("tw:justify-between", Justify == TriJustify.SpaceBetween)
+        .AddClass("tw:justify-around", Justify == TriJustify.SpaceAround)
+        .AddClass("tw:justify-evenly", Justify == TriJustify.SpaceEvenly)
+        .AddClass("tw:items-start", Align == TriAlign.Start)
+        .AddClass("tw:items-end", Align == TriAlign.End)
+        .AddClass("tw:items-center", Align == TriAlign.Center)
+        .AddClass("tw:items-baseline", Align == TriAlign.Baseline)
+        .AddClass("tw:items-stretch", Align == TriAlign.Stretch)
         .AddClass("tw:gap-0", Gap == TriGap.None)
         .AddClass("tw:gap-2", Gap == TriGap.Small)
         .AddClass("tw:gap-4", Gap == TriGap.Medium)
@@ -26,6 +37,8 @@ public partial class TriStack : TriComponentBase
     
     [Parameter] public TriGap Gap { get; set; } = TriGap.Medium;
     [Parameter] public TriWrap? Wrap { get; set; }
+    [Parameter] public TriJustify? Justify { get; set; }
+    [Parameter] public TriAlign? Align { get; set; }
     
     
     
@@ -47,4 +60,23 @@ public enum TriWrap
     Wrap,
     NoWrap,
     WrapReverse
+}
+
+public enum TriJustify
+{
+    Start,
+    End,
+    Center,
+    SpaceBetween,
+    SpaceAround,
+    SpaceEvenly
+}
+
+public enum TriAlign
+{
+    Start,
+    End,
+    Center,
+    Baseline,
+    Stretch
 }
