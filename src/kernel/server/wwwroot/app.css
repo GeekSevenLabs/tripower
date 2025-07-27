@@ -157,11 +157,14 @@
   }
 }
 @layer utilities {
+  .tw\:\!py-6 {
+    padding-block: calc(var(--tw-spacing) * 6) !important;
+  }
   .tw\:\!py-10 {
     padding-block: calc(var(--tw-spacing) * 10) !important;
   }
-  .tw\:py-10 {
-    padding-block: calc(var(--tw-spacing) * 10);
+  .tw\:py-6 {
+    padding-block: calc(var(--tw-spacing) * 6);
   }
 }
 html {

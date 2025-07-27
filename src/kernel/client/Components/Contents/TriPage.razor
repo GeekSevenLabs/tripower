@@ -1,0 +1,21 @@
+﻿@namespace TriPower
+@inherits TriComponentBase
+
+<PageTitle>@Title | TriPower </PageTitle>
+
+<TriContainer Class="@Class" >
+    <MudStack>
+        <MudStack Row Justify="Justify.SpaceBetween" AlignItems="AlignItems.End" Wrap="Wrap.Wrap" Spacing="6">
+            <MudText Typo="Typo.h2">@Title</MudText>
+            <div>
+                @CommandBar
+            </div>
+        </MudStack>
+        <MudDivider/>
+    </MudStack>
+    
+    <MudStack Spacing="6" Class="tw:!py-6">
+        @Body
+    </MudStack>
+
+</TriContainer>
