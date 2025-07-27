@@ -1,0 +1,9 @@
+﻿@import 'tailwindcss' prefix(tw);
+
+html {
+    scroll-behavior: smooth;
+}
+
+html, body {
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}

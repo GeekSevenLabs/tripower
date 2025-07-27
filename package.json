@@ -1,0 +1,32 @@
+{
+  "name": "tripower",
+  "version": "1.0.0",
+  "description": "Projeto de dimensionamento de circuitos elétricos",
+  "keywords": [
+    "eletrict",
+    "projects",
+    "cable"
+  ],
+  "homepage": "https://github.com/GeekSevenLabs/tripower#readme",
+  "bugs": {
+    "url": "https://github.com/GeekSevenLabs/tripower/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GeekSevenLabs/tripower.git"
+  },
+  "license": "MIT",
+  "author": "GeekSevenLabs",
+  "directories": {
+    "doc": "docs",
+    "test": "tests"
+  },
+  "scripts": {
+    "tailwind": "cross-env NODE_ENV=development npx @tailwindcss/cli -i ./src/kernel/server/Styles/app-in.css -o ./src/kernel/server/wwwroot/app.css --watch"
+  },
+  "dependencies": {
+    "@tailwindcss/cli": "^4.1.11",
+    "cross-env": "^10.0.0",
+    "tailwindcss": "^4.1.11"
+  }
+}

@@ -1,0 +1,27 @@
+﻿@inherits LayoutComponentBase
+
+<MudThemeProvider />
+<MudPopoverProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+<MudLayout>
+    <MudAppBar Elevation="1">
+        <MudText Typo="Typo.h5" Class="ml-3">TriPower</MudText>
+        <MudSpacer />
+        
+        <MudButton 
+            Color="Color.Inherit" Variant="Variant.Outlined" StartIcon="@Icons.Material.Filled.Login"
+            Href="/account/register" class="mr-4">
+            Sign In
+        </MudButton>
+        <MudButton 
+            Color="Color.Inherit" Variant="Variant.Outlined" StartIcon="@Icons.Material.Filled.Create"
+            Href="/account/register">
+            Sign Up
+        </MudButton>
+    </MudAppBar>
+    <MudMainContent>
+        @Body
+    </MudMainContent>
+</MudLayout>

@@ -1,5 +1,11 @@
 ﻿@page "/not-found"
-@layout MainLayout
+@layout AnonymousLayout
 
-<h3>Not Found</h3>
-<p>Sorry, the content you are looking for does not exist.</p>
+@* <h3>Not Found</h3> *@
+@* <p>Sorry, the content you are looking for does not exist.</p> *@
+
+<MudStack AlignItems="AlignItems.Center" Justify="Justify.Center" Class="py-8">
+    <MudText Typo="Typo.h3" Align="Align.Center">Not Found</MudText>
+    <MudText Align="Align.Center">Sorry, the content you are looking for does not exist.</MudText>
+    <MudButton Variant="Variant.Filled" Color="Color.Primary" Href="/">Go to Home</MudButton>
+</MudStack>
