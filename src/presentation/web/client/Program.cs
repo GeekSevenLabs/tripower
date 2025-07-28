@@ -1,12 +1,14 @@
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using TriPower;
 using TriPower.Identity.Application.Shared;
+using TriPower.Presentation.Web.Client.Services;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
 builder.Services.AddMudServices();
 builder.Services.AddTriHandlerMediatorForClient();
 builder.Services.AddKernelClientServices(builder.HostEnvironment.BaseAddress);
+builder.Services.AddScoped<AuthService>();
 
 // Register Handler and Request services ==================
 

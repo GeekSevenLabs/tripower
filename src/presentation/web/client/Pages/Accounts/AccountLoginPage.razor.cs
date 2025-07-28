@@ -20,6 +20,6 @@ public partial class AccountLoginPage : ComponentBase
             .ShowError()
             .ShowSuccess("Login successful!");
         
-        Navigation.NavigateTo("/overview");
+        Navigation.NavigateTo("/overview", forceLoad: true);
     }
 }

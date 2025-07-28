@@ -2,6 +2,7 @@ using Scalar.AspNetCore;
 using TriPower.Identity.Application;
 using TriPower.Identity.Application.Shared;
 using TriPower.Identity.IoC;
+using TriPower.Presentation.Web.Client.Services;
 using TriPower.Presentation.Web.Components;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,6 +23,7 @@ builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddTriHandlerMediatorForServer();
 builder.Services.AddKernelServerServices();
+builder.Services.AddScoped<AuthService>();
 
 builder.Services.AddTriIdentityInfrastructure(builder.Configuration);
 builder.Services.AddTriIdentityAuthenticationAndAuthorization(builder.Configuration);

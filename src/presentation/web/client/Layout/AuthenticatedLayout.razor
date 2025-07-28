@@ -15,7 +15,20 @@
         
         <AuthorizeView>
             <Authorized>
-                <MudText Class="ml-3">@context.User.Identity?.Name</MudText>
+                <MudMenu>
+                    <ActivatorContent>
+                        <MudButton 
+                            Variant="Variant.Filled" Color="Color.Tertiary" StartIcon="@Icons.Material.Filled.AccountCircle">
+                            Olá @context.User.Identity?.Name
+                        </MudButton>
+                    </ActivatorContent>
+                    <ChildContent>
+                        <MudMenuItem Label="Minha conta" />
+                        <MudMenuItem Label="Configurações" />
+                        <MudMenuItem Label="Sair" OnClick="@Auth.LogoutAsync" />
+                    </ChildContent>
+                </MudMenu>
+                
             </Authorized>
             <Authorizing>
                 <MudText Class="ml-3">Authorizing...</MudText>
