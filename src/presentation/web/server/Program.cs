@@ -1,5 +1,7 @@
+using Microsoft.EntityFrameworkCore;
 using TriPower.Identity.Application;
 using TriPower.Identity.Application.Shared;
+using TriPower.Identity.Infrastructure.Contexts;
 using TriPower.Identity.IoC;
 using TriPower.Presentation.Web.Components;
 
@@ -49,6 +51,7 @@ app.UseStatusCodePagesWithReExecute("/not-found", createScopeForErrors: true);
 app.UseHttpsRedirection();
 
 app.UseAntiforgery();
+app.UseExceptionHandler();
 
 app.MapStaticAssets();
 app.MapRazorComponents<App>()

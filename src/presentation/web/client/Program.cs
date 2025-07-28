@@ -6,7 +6,7 @@ var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
 builder.Services.AddMudServices();
 builder.Services.AddTriHandlerMediatorForClient();
-builder.Services.AddKernelClientServices();
+builder.Services.AddKernelClientServices(builder.HostEnvironment.BaseAddress);
 
 // Register Handler and Request services ==================
 
@@ -17,12 +17,5 @@ builder.Services.AddHandlerRequestServicesForClient(
 );
 
 // End of Handler and Request services registration =======
-
-// HttpClient configuration ===============================
-builder.Services.AddScoped(_ => new HttpClient
-{
-    BaseAddress = new Uri(builder.HostEnvironment.BaseAddress)
-});
-// End of HttpClient configuration ========================
 
 await builder.Build().RunAsync();

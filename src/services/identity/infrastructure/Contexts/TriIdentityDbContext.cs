@@ -11,8 +11,6 @@ public class TriIdentityDbContext(DbContextOptions<TriIdentityDbContext> options
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        base.OnModelCreating(modelBuilder);
-
         modelBuilder.ApplyConfiguration(new UserConfiguration());
     }
 

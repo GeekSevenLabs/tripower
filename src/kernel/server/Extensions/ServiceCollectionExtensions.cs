@@ -12,6 +12,7 @@ public static class ServiceCollectionExtensions
         
         public void AddKernelServerServices()
         {
+            services.AddProblemDetails();
             services.AddScoped<IUiUtils, UiUtils>();
         }
     }
