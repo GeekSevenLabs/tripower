@@ -6,3 +6,4 @@ global using MudBlazor;
 global using System.ComponentModel;
 global using FluentValidation;
 global using System.Linq.Expressions;
+global using System.Runtime.CompilerServices;

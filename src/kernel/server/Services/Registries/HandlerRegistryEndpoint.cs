@@ -46,7 +46,7 @@ internal class HandlerRegistryEndpoint(IRequestProvider provider, IEndpointRoute
         return this;
     }
 
-    private static void ConfigureSecurity(RouteHandlerBuilder endpoint, HandlerRequestDefinition definition)
+    private static void ConfigureSecurity(RouteHandlerBuilder endpoint, IHandlerRequestDefinition definition)
     {
         if (definition.RequiredAuthentication)
         {
@@ -62,7 +62,7 @@ internal class HandlerRegistryEndpoint(IRequestProvider provider, IEndpointRoute
         }
     }
     
-    private static void ConfigureValidation(RouteHandlerBuilder endpoint, HandlerRequestDefinition definition)
+    private static void ConfigureValidation(RouteHandlerBuilder endpoint, IHandlerRequestDefinition definition)
     {
         if (definition.RequiredValidation)
         {

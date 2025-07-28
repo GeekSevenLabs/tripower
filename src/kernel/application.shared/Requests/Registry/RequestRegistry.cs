@@ -3,10 +3,10 @@ namespace TriPower;
 
 internal class RequestRegistry(IRequestProvider provider, IServiceCollection services) : IRequestRegistry
 {
-    public IRequestRegistry Register<TRequest>(Action<IHandlerRequestDefinitionBuilder> builder) 
+    public IRequestRegistry Register<TRequest>(Action<IHandlerRequestDefinitionBuilder<TRequest>> builder) 
         where TRequest : IRequest
     {
-        var builderInstance = HandlerRequestDefinitionBuilder.Empty;
+        var builderInstance = HandlerRequestDefinitionBuilder<TRequest>.Empty;
         builder.Invoke(builderInstance);
         var definition = builderInstance.Build();
         
@@ -15,11 +15,11 @@ internal class RequestRegistry(IRequestProvider provider, IServiceCollection ser
         return this;
     }
 
-    public IRequestRegistry RegisterWithValidator<TRequest, TValidator>(Action<IHandlerRequestDefinitionBuilder> builder) 
+    public IRequestRegistry RegisterWithValidator<TRequest, TValidator>(Action<IHandlerRequestDefinitionBuilder<TRequest>> builder) 
         where TRequest : IRequest 
         where TValidator : class, IValidator<TRequest>
     {
-        var builderInstance = HandlerRequestDefinitionBuilder.Empty;
+        var builderInstance = HandlerRequestDefinitionBuilder<TRequest>.Empty;
         builder.Invoke(builderInstance);
         var definition = builderInstance.Build();
 
@@ -31,10 +31,10 @@ internal class RequestRegistry(IRequestProvider provider, IServiceCollection ser
         return this;
     }
 
-    public IRequestRegistry Register<TRequest, TResponse>(Action<IHandlerRequestDefinitionBuilder> builder) 
+    public IRequestRegistry Register<TRequest, TResponse>(Action<IHandlerRequestDefinitionBuilder<TRequest>> builder) 
         where TRequest : IRequest<TResponse>
     {
-        var builderInstance = HandlerRequestDefinitionBuilder.Empty;
+        var builderInstance = HandlerRequestDefinitionBuilder<TRequest>.Empty;
         builder.Invoke(builderInstance);
         var definition = builderInstance.Build();
         
@@ -43,11 +43,11 @@ internal class RequestRegistry(IRequestProvider provider, IServiceCollection ser
         return this;
     }
 
-    public IRequestRegistry RegisterWithValidator<TRequest, TResponse, TValidator>(Action<IHandlerRequestDefinitionBuilder> builder) 
+    public IRequestRegistry RegisterWithValidator<TRequest, TResponse, TValidator>(Action<IHandlerRequestDefinitionBuilder<TRequest>> builder) 
         where TRequest : IRequest<TResponse> 
         where TValidator : class, IValidator<TRequest>
     {
-        var builderInstance = HandlerRequestDefinitionBuilder.Empty;
+        var builderInstance = HandlerRequestDefinitionBuilder<TRequest>.Empty;
         builder.Invoke(builderInstance);
         var definition = builderInstance.Build();
 

@@ -9,5 +9,10 @@ public static class ServiceCollectionExtensions
         {
             services.AddTransient<IHandlerMediator, HandlerMediatorClient>();
         }
+
+        public void AddKernelClientServices()
+        {
+            services.AddScoped<IUiUtils, UiUtils>();
+        }
     }
 }

@@ -16,11 +16,11 @@
         <link rel="stylesheet" href="@Assets["TriPower.Presentation.Web.styles.css"]"/>
         
         <ImportMap/>
-        <HeadOutlet @rendermode="InteractiveAuto"/>
+        <HeadOutlet @rendermode="InteractiveWebAssembly"/>
     </head>
 
     <body>
-        <Routes @rendermode="InteractiveAuto" />
+        <Routes @rendermode="InteractiveWebAssembly" />
         <ReconnectModal />
         <script src="@Assets["_framework/blazor.web.js"]"></script>
         <script src="@Assets["_content/MudBlazor/MudBlazor.min.js"]"></script>

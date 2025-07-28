@@ -1,4 +1,5 @@
-﻿using TriPower.Identity.Domain.Users;
+﻿using Microsoft.EntityFrameworkCore;
+using TriPower.Identity.Domain.Users;
 using TriPower.Identity.Infrastructure.Contexts;
 
 namespace TriPower.Identity.Infrastructure.Repositories;
@@ -9,6 +10,7 @@ public class UserRepository(TriIdentityDbContext db) : IUserRepository
 
     public async Task<User?> GetByEmailAsync(string email)
     {
-        return await db.Users.FindAsync(email.ToUpperInvariant());
+        email = email.ToUpperInvariant();
+        return await db.Users.FirstOrDefaultAsync(user => user.Email == email);
     }
 }

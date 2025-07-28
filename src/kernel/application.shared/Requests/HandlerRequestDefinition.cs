@@ -1,7 +1,7 @@
 // ReSharper disable once CheckNamespace
 namespace TriPower;
 
-public readonly record struct HandlerRequestDefinition
+public record HandlerRequestDefinition<TRequest> : IHandlerRequestDefinition where TRequest : IRequest
 {
     #region Validation
 
@@ -13,16 +13,41 @@ public readonly record struct HandlerRequestDefinition
 
     public bool RequiredAuthentication { get; init; }
 
-    public string[] RequiredRoles { get; init; }
-    public string[] RequiredClaims { get; init; }
+    public required string[] RequiredRoles { get; init; }
+    public required string[] RequiredClaims { get; init; }
 
     #endregion
     
     #region Endpoint
 
-    public string Path { get; init; }
+    public required string Path { get; init; }
     public EndpointMethod Method { get; init; }
-    public Func<object, string> BuildPath { get; init; }
+    public required Func<TRequest, string> BuildPath { get; init; }
+
+    #endregion
+}
+
+public interface IHandlerRequestDefinition
+{
+    #region Validation
+
+    public bool RequiredValidation { get; }
+
+    #endregion
+
+    #region Authorization
+
+    public bool RequiredAuthentication { get; }
+
+    public string[] RequiredRoles { get; }
+    public string[] RequiredClaims { get; }
+
+    #endregion
+    
+    #region Endpoint
+
+    public string Path { get; }
+    public EndpointMethod Method { get; }
 
     #endregion
 }

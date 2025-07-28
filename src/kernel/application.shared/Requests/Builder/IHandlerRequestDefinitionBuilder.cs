@@ -1,17 +1,17 @@
 // ReSharper disable once CheckNamespace
 namespace TriPower;
 
-public interface IHandlerRequestDefinitionBuilder
+public interface IHandlerRequestDefinitionBuilder<out TRequest> where TRequest : IRequest
 {
-    internal IHandlerRequestDefinitionBuilder WithRequiredValidation(bool required = true);
+    internal IHandlerRequestDefinitionBuilder<TRequest> WithRequiredValidation(bool required = true);
     
-    IHandlerRequestDefinitionBuilder WithRequiredAuthentication(bool required = true);
-    IHandlerRequestDefinitionBuilder WithRequiredRoles(params string[] roles);
-    IHandlerRequestDefinitionBuilder WithRequiredClaims(params string[] claims);
+    IHandlerRequestDefinitionBuilder<TRequest> WithRequiredAuthentication(bool required = true);
+    IHandlerRequestDefinitionBuilder<TRequest> WithRequiredRoles(params string[] roles);
+    IHandlerRequestDefinitionBuilder<TRequest> WithRequiredClaims(params string[] claims);
     
-    IHandlerRequestDefinitionBuilder MapGet([StringSyntax(StringSyntaxAttribute.Uri)] string path);
-    IHandlerRequestDefinitionBuilder MapPost([StringSyntax(StringSyntaxAttribute.Uri)] string path);
-    IHandlerRequestDefinitionBuilder MapDelete([StringSyntax(StringSyntaxAttribute.Uri)] string path);
+    IHandlerRequestDefinitionBuilder<TRequest> MapGet([StringSyntax(StringSyntaxAttribute.Uri)] string path, Func<TRequest, string> build);
+    IHandlerRequestDefinitionBuilder<TRequest> MapPost([StringSyntax(StringSyntaxAttribute.Uri)] string path, Func<TRequest, string> build);
+    IHandlerRequestDefinitionBuilder<TRequest> MapDelete([StringSyntax(StringSyntaxAttribute.Uri)] string path, Func<TRequest, string> build);
     
-    internal HandlerRequestDefinition Build();
+    internal IHandlerRequestDefinition Build();
 }

@@ -12,7 +12,8 @@ public class HandlerMediatorClient(IRequestProvider provider, HttpClient client)
         
         var requestMessage = CreateRequest(definition, request);
         var response = await client.SendAsync(requestMessage, cancellationToken);
-        response.EnsureSuccessStatusCode();
+        
+        await TrowWhenIsNotSuccessResponseAsync(response, cancellationToken);
     }
 
     public async Task<TResponse> SendAsync<TRequest, TResponse>(TRequest request, CancellationToken cancellationToken = default) where TRequest : IRequest<TResponse>
@@ -21,22 +22,31 @@ public class HandlerMediatorClient(IRequestProvider provider, HttpClient client)
         
         var requestMessage = CreateRequest(definition, request);
         var response = await client.SendAsync(requestMessage, cancellationToken);
-        response.EnsureSuccessStatusCode();
 
-        var content = await response.Content.ReadAsStringAsync(cancellationToken);
-        return JsonSerializer.Deserialize<TResponse>(content)!;
+        await TrowWhenIsNotSuccessResponseAsync(response, cancellationToken);
+        
+        var json = await response.Content.ReadAsStringAsync(cancellationToken);
+        return JsonSerializer.Deserialize<TResponse>(json)!;
     }
 
-    private static HttpRequestMessage CreateRequest<TRequest>(HandlerRequestDefinition definition, TRequest request) where TRequest : IRequest
+    private static HttpRequestMessage CreateRequest<TRequest>(IHandlerRequestDefinition definition, TRequest request) where TRequest : IRequest
     {
         // TODO: Implementar mecanismo para obter o SerializerContext
-        return new HttpRequestMessage(IdentifyMethod(definition), definition.BuildPath(request))
+        return new HttpRequestMessage(IdentifyMethod(definition), BuildPath(definition, request))
         {
             Content = CreateContent(definition, request),
         };
     }
+    
+    private static async Task TrowWhenIsNotSuccessResponseAsync(HttpResponseMessage response, CancellationToken token)
+    {
+        if (response.IsSuccessStatusCode) return;
 
-    private static StringContent CreateContent<TRequest>(HandlerRequestDefinition definition, TRequest request) where TRequest : IRequest
+        var content = await response.Content.ReadAsStringAsync(token);
+        throw new HttpRequestException($"Request failed with status code {response.StatusCode}: {content}", null, response.StatusCode);
+    }
+
+    private static StringContent CreateContent<TRequest>(IHandlerRequestDefinition definition, TRequest request) where TRequest : IRequest
     {
         return definition.Method switch
         {
@@ -47,7 +57,7 @@ public class HandlerMediatorClient(IRequestProvider provider, HttpClient client)
         };
     }
     
-    private static HttpMethod IdentifyMethod(HandlerRequestDefinition definition)
+    private static HttpMethod IdentifyMethod(IHandlerRequestDefinition definition)
     {
         return definition.Method switch
         {
@@ -56,5 +66,10 @@ public class HandlerMediatorClient(IRequestProvider provider, HttpClient client)
             EndpointMethod.Delete => HttpMethod.Delete,
             _ => throw new NotSupportedException($"The method {definition.Method} is not supported.")
         };
+    }
+
+    private static string BuildPath<TRequest>(IHandlerRequestDefinition definition, TRequest request) where TRequest : IRequest
+    {
+        return "/api"+((HandlerRequestDefinition<TRequest>)definition).BuildPath(request);
     }
 }

@@ -1,0 +1,18 @@
+﻿@namespace TriPower
+
+<MudDialog DefaultFocus="DefaultFocus.LastChild">
+    <DialogContent>
+        <div style="white-space: pre-line">
+            @Message
+        </div>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="@Close">Ok</MudButton>
+    </DialogActions>
+</MudDialog>
+@code 
+{
+    [CascadingParameter] public required IMudDialogInstance MudDialog { get; set; }
+    [Parameter] public string Message { get; set; } = string.Empty;
+    void Close() => MudDialog.Close();
+}
