@@ -1,0 +1,50 @@
+﻿@page "/account/register"
+
+<TriPage Title="Sign Up">
+    <Body>
+    <TriEditForm FormName="account-register" Model="Request" Validator="Validator" OnValidSubmit="HandleValidSubmitAsync">
+        
+        <TriSection Label="Suas informações">
+            
+            <Content>
+                <TriGrid ColsMd="2" ColsLg="2" ColsXl="3">
+                    <TriTextField @bind-Value="Request.FirstName" Label="Nome" />
+                    <TriTextField @bind-Value="Request.LastName" Label="Sobrenome" />
+                </TriGrid>
+            </Content>
+            
+        </TriSection>
+        
+        <TriSection Label="Usuário">
+            
+            <Content>
+                <TriGrid ColsMd="2" ColsLg="2" ColsXl="3">
+                    <TriTextField @bind-Value="Request.Email" Label="E-mail" />
+                    <TriTextField @bind-Value="Request.Password" Label="Senha" InputType="InputType.Password" />
+                    <TriTextField @bind-Value="Request.ConfirmPassword" Label="Confirmação de Senha" InputType="InputType.Password" />
+                </TriGrid>
+            </Content>
+            
+        </TriSection>
+        
+        <TriSection Label="Validações">
+            <Content>
+                <ValidationSummary/>
+            </Content>
+        </TriSection>
+        
+        
+        <TriCommandBar BackLink="/">
+            
+            <MudButton 
+                Variant="Variant.Filled" Color="Color.Primary" ButtonType="ButtonType.Submit"
+                StartIcon="@Icons.Material.Filled.Save">
+                Gravar
+            </MudButton>
+            
+        </TriCommandBar>
+        
+    </TriEditForm>
+    
+    </Body>
+</TriPage>

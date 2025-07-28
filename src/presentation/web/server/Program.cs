@@ -13,6 +13,7 @@ builder.Services.AddRazorComponents()
 builder.Services.AddMudServices();
 
 builder.Services.AddTriHandlerMediatorForServer();
+builder.Services.AddKernelServerServices();
 builder.Services.AddTriIdentityInfrastructure(builder.Configuration);
 
 // 1. Services and configurations for Identity

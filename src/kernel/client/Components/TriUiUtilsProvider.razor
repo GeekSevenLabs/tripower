@@ -1,0 +1,16 @@
+﻿@namespace TriPower
+@inject IUiUtils Ui;
+<MudOverlay Visible="Ui.IsBusy" DarkBackground ZIndex="1400">
+    <MudCard Outlined>
+        <MudCardContent>
+            <MudStack AlignItems="AlignItems.Center">
+                <MudText Typo="Typo.h6">@Ui.BusyMessage</MudText>
+                <MudProgressCircular Indeterminate Color="Color.Primary"></MudProgressCircular>
+            </MudStack>
+        </MudCardContent>
+    </MudCard>
+</MudOverlay>
+@code 
+{
+    protected override void OnInitialized() => Ui.BusyChanged += StateHasChanged;
+}

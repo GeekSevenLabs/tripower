@@ -1,0 +1,20 @@
+﻿@namespace TriPower
+@inherits TriComponentBase
+
+<MudPaper Class="tw:!px-6 tw:!py-6" Elevation="0" Outlined>
+    
+    <TriStack Gap="TriGap.None">
+        <TriStack Row Justify="TriJustify.SpaceBetween" Align="TriAlign.End" Wrap="TriWrap.Wrap">
+            <MudText Typo="Typo.h5">@Label</MudText>
+            <div>
+                @CommandBar
+            </div>
+        </TriStack>
+        <MudDivider/>
+    </TriStack>
+    
+    <TriStack Class="tw:!pt-6">
+        @Content
+    </TriStack>
+    
+</MudPaper>

@@ -3,11 +3,11 @@ namespace TriPower;
 
 internal class RequestProvider : IRequestProvider
 {
-    private readonly Dictionary<Type, HandlerRequestDefinition> _definitions = [];
+    private readonly Dictionary<Type, IHandlerRequestDefinition> _definitions = [];
     
-    public static RequestProvider Empty => new RequestProvider();
+    public static RequestProvider Empty => new();
     
-    public HandlerRequestDefinition GetRequiredDefinition<TRequest>() where TRequest : IRequest
+    public IHandlerRequestDefinition GetRequiredDefinition<TRequest>() where TRequest : IRequest
     {
         var type = typeof(TRequest);
         
@@ -16,7 +16,7 @@ internal class RequestProvider : IRequestProvider
             throw new InvalidOperationException($"No request definition found for type {type.FullName}");
     }
 
-    public void AddDefinition<TRequest>(HandlerRequestDefinition definition) where TRequest : IRequest
+    public void AddDefinition<TRequest>(IHandlerRequestDefinition definition) where TRequest : IRequest
     {
         _definitions[typeof(TRequest)] = definition;
     }

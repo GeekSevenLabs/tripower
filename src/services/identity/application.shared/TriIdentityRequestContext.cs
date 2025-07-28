@@ -9,7 +9,7 @@ public class TriIdentityRequestContext : IRequestContext
         registry.RegisterWithValidator<CreateUserRequest, CreateUserValidator>(builder =>
         {
             builder
-                .MapPost("/users")
+                .MapPost("/users", _ => "/users")
                 .WithRequiredAuthentication(required: false);
         });
     }

@@ -1,0 +1,24 @@
+﻿@namespace TriPower
+@inherits TriComponentBase
+@typeparam TModel where TModel : class
+
+
+<EditForm
+    id="@Id"
+    FormName="@FormName"
+    class="@Class"
+    style="@Style"
+    @attributes="UserAttributes"
+    Model="Model"
+    OnSubmit="@OnSubmit"
+    OnValidSubmit="@OnValidSubmit"
+    OnInvalidSubmit="@OnInvalidSubmit">
+    
+    <BdkFluentValidator Validator="Validator" />
+    
+    <TriStack>
+        @ChildContent
+    </TriStack>
+    
+</EditForm>
+

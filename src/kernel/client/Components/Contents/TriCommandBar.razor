@@ -1,0 +1,23 @@
+﻿@namespace TriPower
+@inherits TriComponentBase
+
+<MudPaper id="@Id"
+    Class="@CssBuilder.Default("tw:!px-6 tw:!py-3").AddClass(Class).Build()" Elevation="0" Outlined
+    Style="@Style" @attributes="UserAttributes">
+    
+    <TriStack Row Align="TriAlign.Center" Justify="TriJustify.SpaceBetween">
+        <TriStack Row Justify="TriJustify.SpaceBetween" Align="TriAlign.End" Wrap="TriWrap.Wrap">
+            <MudIconButton 
+                Icon="@Icons.Material.Filled.ArrowBackIos"
+                Color="Color.Primary"
+                Variant="Variant.Text"
+                Href="@BackLink"
+                ButtonType="ButtonType.Button" />
+        </TriStack>
+        
+        <TriStack Row Justify="TriJustify.SpaceBetween" Align="TriAlign.Center" Wrap="TriWrap.Wrap">
+            @ChildContent
+        </TriStack>
+    </TriStack>
+    
+</MudPaper>

@@ -3,7 +3,7 @@ namespace TriPower;
 
 public interface IRequestProvider
 {
-    HandlerRequestDefinition GetRequiredDefinition<TRequest>() where TRequest : IRequest;
+    IHandlerRequestDefinition GetRequiredDefinition<TRequest>() where TRequest : IRequest;
     
-    internal void AddDefinition<TRequest>(HandlerRequestDefinition definition) where TRequest : IRequest;
+    internal void AddDefinition<TRequest>(IHandlerRequestDefinition definition) where TRequest : IRequest;
 }
