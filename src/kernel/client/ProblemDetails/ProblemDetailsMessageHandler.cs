@@ -21,6 +21,7 @@ public class ProblemDetailsMessageHandler(NavigationManager navigationManager) :
             
             var ex = new InvalidOperationException(problemDetailsData!.Message);
             ex.ChangeProblemDetailsData(problemDetailsData);
+            throw ex;
         }
         
         var title = httpResponseMessage.StatusCode switch
@@ -44,9 +45,9 @@ public class ProblemDetailsMessageHandler(NavigationManager navigationManager) :
         }
         
         problemDetailsData = new ProblemDetailsData("0", title, httpResponseMessage.StatusCode, detail, null);
-        throw new InvalidOperationException(problemDetailsData.Message)
-        {
-            Data = { ["ProblemDetailsData"] = problemDetailsData }
-        };
+        
+        var exGeral = new InvalidOperationException(problemDetailsData.Message);
+        exGeral.ChangeProblemDetailsData(problemDetailsData);
+        throw exGeral;
     }
 }

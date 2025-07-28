@@ -1,3 +1,4 @@
+using Scalar.AspNetCore;
 using TriPower.Identity.Application;
 using TriPower.Identity.Application.Shared;
 using TriPower.Identity.IoC;
@@ -8,9 +9,16 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents()
-    .AddInteractiveWebAssemblyComponents();
+    .AddInteractiveWebAssemblyComponents()
+    .AddAuthenticationStateSerialization(options => options.SerializeAllClaims = true);
+
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddCascadingAuthenticationState();
 
 builder.Services.AddMudServices();
+builder.Services.AddOutputCache();
+builder.Services.AddOpenApi();
+builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddTriHandlerMediatorForServer();
 builder.Services.AddKernelServerServices();
@@ -32,6 +40,8 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseWebAssemblyDebugging();
+    app.MapOpenApi();
+    app.MapScalarApiReference();
 }
 else
 {
@@ -39,6 +49,7 @@ else
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
 
 app.UseStatusCodePagesWithReExecute("/not-found", createScopeForErrors: true);
 

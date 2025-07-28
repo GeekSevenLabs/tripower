@@ -18,4 +18,8 @@ builder.Services.AddHandlerRequestServicesForClient(
 
 // End of Handler and Request services registration =======
 
+builder.Services.AddAuthorizationCore();
+builder.Services.AddCascadingAuthenticationState();
+builder.Services.AddAuthenticationStateDeserialization();
+
 await builder.Build().RunAsync();

@@ -6,4 +6,6 @@ public interface IAuthenticationService
 {
     Task<bool> AuthenticateAsync(User user, string password, CancellationToken cancellationToken = default);
     Task<AuthenticationTokens> RefreshAuthenticateAsync(string refreshToken, CancellationToken cancellationToken = default);
+    
+    Task LogoutAsync(CancellationToken cancellationToken = default);
 }

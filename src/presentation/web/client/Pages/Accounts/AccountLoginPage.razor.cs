@@ -1,11 +1,11 @@
-﻿using TriPower.Identity.Application.Shared.Users.Create;
+﻿using TriPower.Identity.Application.Shared.Users.Login;
 
 namespace TriPower.Presentation.Web.Client.Pages.Accounts;
 
-public partial class AccountRegisterPage : ComponentBase
+public partial class AccountLoginPage : ComponentBase
 {
-    private CreateUserRequest Request { get; } = new();
-    private CreateUserValidator Validator { get; } = new();
+    private LoginUserRequest Request { get; } = new();
+    private LoginUserValidator Validator { get; } = new();
     
     [Inject] public required IHandlerMediator HandlerMediator { get; set; }
     [Inject] public required IUiUtils UiUtils { get; set; }
@@ -16,10 +16,10 @@ public partial class AccountRegisterPage : ComponentBase
         await HandlerMediator
             .SendAsync(Request)
             .Use(UiUtils)
-            .ShowBusy("Creating account...")
+            .ShowBusy("Logging in...")
             .ShowError()
-            .ShowSuccess("Account created successfully!");
+            .ShowSuccess("Login successful!");
         
-        Navigation.NavigateTo("/account/login", true);
+        Navigation.NavigateTo("/overview");
     }
 }

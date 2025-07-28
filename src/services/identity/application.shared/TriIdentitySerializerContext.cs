@@ -1,4 +1,6 @@
 ﻿using TriPower.Identity.Application.Shared.Users.Create;
+using TriPower.Identity.Application.Shared.Users.Login;
+using TriPower.Identity.Application.Shared.Users.Logout;
 
 namespace TriPower.Identity.Application.Shared;
 
@@ -7,6 +9,8 @@ namespace TriPower.Identity.Application.Shared;
 #region Users
 
 [JsonSerializable(typeof(CreateUserRequest))]
+[JsonSerializable(typeof(LoginUserRequest))]
+[JsonSerializable(typeof(LogoutUserRequest))]
 
 #endregion
 

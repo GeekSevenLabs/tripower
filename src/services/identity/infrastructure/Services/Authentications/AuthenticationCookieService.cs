@@ -6,7 +6,7 @@ using TriPower.Identity.Application.Services.Authentications;
 
 namespace TriPower.Identity.Infrastructure.Services.Authentications;
 
-public class AuthenticationCookieService(HttpContextAccessor accessor) : IAuthenticationCookieService
+public class AuthenticationCookieService(IHttpContextAccessor accessor) : IAuthenticationCookieService
 {
     private const string CookieAccessTokenName = "TriAccessToken";
     private const string CookieRefreshTokenName = "TriRefreshToken";

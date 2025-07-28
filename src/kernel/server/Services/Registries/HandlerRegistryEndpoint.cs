@@ -48,17 +48,17 @@ internal class HandlerRegistryEndpoint(IRequestProvider provider, IEndpointRoute
 
     private static void ConfigureSecurity(RouteHandlerBuilder endpoint, IHandlerRequestDefinition definition)
     {
-        if (definition.RequiredAuthentication)
+        switch (definition)
         {
-            endpoint.RequireAuthorization(b =>
-            {
-                b.RequireRole(definition.RequiredRoles);
-                // TODO: Melhorar adição de claims requeridas
-            });
-        }
-        else
-        {
-            endpoint.AllowAnonymous();
+            case { RequiredAuthentication: true, RequiredRoles.IsEmpty: true }:
+                endpoint.RequireAuthorization();
+                break;
+            case { RequiredAuthentication: true, RequiredRoles.IsNotEmpty: true }:
+                endpoint.RequireAuthorization(builder => { builder.RequireRole(definition.RequiredRoles); });
+                break;
+            default:
+                endpoint.AllowAnonymous();
+                break;
         }
     }
     

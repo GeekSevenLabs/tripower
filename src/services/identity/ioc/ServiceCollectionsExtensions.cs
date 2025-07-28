@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Security.Claims;
+using System.Text;
 using Menso.Tools.Exceptions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -70,7 +71,6 @@ public static class ServiceCollectionsExtensions
                 {
                     OnMessageReceived = async context =>
                     {
-
                         var authenticationCookie = context.HttpContext.RequestServices.GetRequiredService<IAuthenticationCookieService>();
                         var accessToken = await authenticationCookie.GetAccessTokenAsync();
                         

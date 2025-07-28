@@ -55,4 +55,16 @@ public class AuthenticationService(
         
         return tokens;
     }
+
+    public async Task LogoutAsync(CancellationToken cancellationToken = default)
+    {
+        var refreshToken = await authenticationCookie.GetRefreshTokenAsync();
+        
+        if (!string.IsNullOrEmpty(refreshToken))
+        {
+            await authenticationCache.RevokeRefreshTokenAsync(refreshToken);
+        }
+
+        await authenticationCookie.RemoveTokensAsync();
+    }
 }
