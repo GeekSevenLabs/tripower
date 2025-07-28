@@ -1,10 +1,5 @@
-using System.Text;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 using TriPower.Identity.Application;
 using TriPower.Identity.Application.Shared;
-using TriPower.Identity.Infrastructure.Contexts;
 using TriPower.Identity.IoC;
 using TriPower.Presentation.Web.Components;
 
@@ -19,7 +14,9 @@ builder.Services.AddMudServices();
 
 builder.Services.AddTriHandlerMediatorForServer();
 builder.Services.AddKernelServerServices();
+
 builder.Services.AddTriIdentityInfrastructure(builder.Configuration);
+builder.Services.AddTriIdentityAuthenticationAndAuthorization(builder.Configuration);
 
 // 1. Services and configurations for Identity
 
@@ -29,17 +26,7 @@ builder.AddHandlerRequestServicesForServer(
     serviceRegistries: [TriIdentityServicesContext.ConfigureServices]
 );
 
-// 2. Authentication and Authorization
-
-
-
 var app = builder.Build();
-
-// 1. Endpoints for Identity
-
-app.MapHandlerRequestEndpoints(
-    [TriIdentityHandlersContext.ConfigureHandlers]
-);
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -56,11 +43,22 @@ else
 app.UseStatusCodePagesWithReExecute("/not-found", createScopeForErrors: true);
 
 app.UseHttpsRedirection();
-
 app.UseAntiforgery();
+
 app.UseExceptionHandler();
 
+app.UseAuthentication();
+app.UseAuthorization();
+
+app.UseOutputCache();
 app.MapStaticAssets();
+
+// 1. Endpoints for Identity
+
+app.MapHandlerRequestEndpoints(
+    [TriIdentityHandlersContext.ConfigureHandlers]
+);
+
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode()
     .AddInteractiveWebAssemblyRenderMode()

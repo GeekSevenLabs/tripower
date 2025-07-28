@@ -35,18 +35,18 @@ public static class ServiceCollectionsExtensions
         services.AddScoped<IAuthenticationTokenService, AuthenticationTokenService>();
         services.AddScoped<IAuthenticationCookieService, AuthenticationCookieService>();
 
+        
+    }
+
+    public static void AddTriIdentityAuthenticationAndAuthorization(this IServiceCollection services, IConfiguration configuration)
+    {
         // Options
         services.Configure<JwtOptions>(configuration.GetSection(nameof(JwtOptions)));
         var jwtOptions = configuration.GetSection(nameof(JwtOptions)).Get<JwtOptions>();
         Throw.When.Null(jwtOptions, "JwtOptions configuration is missing or null.");
         
-        // Authentication and Authorization
-        services.AddTriAuthenticationAndAuthorization(jwtOptions);
-    }
-
-    private static void AddTriAuthenticationAndAuthorization(this IServiceCollection services, JwtOptions jwtOptions)
-    {
-        services.AddAuthentication(options =>
+        services
+            .AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -91,5 +91,7 @@ public static class ServiceCollectionsExtensions
                     }
                 };
             });
+
+        services.AddAuthorization();
     }
 }
