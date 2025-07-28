@@ -29,8 +29,9 @@ public class AuthenticationService(
         return true;
     }
 
-    public async Task<bool> RefreshAuthenticateAsync(string refreshToken, CancellationToken cancellationToken = default)
+    public async Task<AuthenticationTokens> RefreshAuthenticateAsync(string refreshToken, CancellationToken cancellationToken = default)
     {
+        Throw<UnauthorizedAccessException>.When.NullOrEmpty(refreshToken, RequiredNewAuthenticationMessage);
         Throw<UnauthorizedAccessException>.When.False(
             await authenticationCache.IsRefreshTokenRevokedAsync(refreshToken), 
             RequiredNewAuthenticationMessage
@@ -52,6 +53,6 @@ public class AuthenticationService(
 
         await authenticationCache.SetRefreshTokenAsync(tokens.RefreshToken);
         
-        return true;
+        return tokens;
     }
 }

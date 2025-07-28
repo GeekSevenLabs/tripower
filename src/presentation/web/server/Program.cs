@@ -1,4 +1,7 @@
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using TriPower.Identity.Application;
 using TriPower.Identity.Application.Shared;
 using TriPower.Identity.Infrastructure.Contexts;
@@ -25,6 +28,10 @@ builder.AddHandlerRequestServicesForServer(
     handlerRegistries: [TriIdentityHandlersContext.ConfigureHandlers],
     serviceRegistries: [TriIdentityServicesContext.ConfigureServices]
 );
+
+// 2. Authentication and Authorization
+
+
 
 var app = builder.Build();
 
