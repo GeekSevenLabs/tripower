@@ -76,9 +76,10 @@ public static class ServiceCollectionsExtensions
                         
                         switch (accessToken)
                         {
-                            case { NeedsRefresh: true}:
+                            case null or { NeedsRefresh: true}:
                             {
                                 var refreshToken = await authenticationCookie.GetRefreshTokenAsync();
+                                if(refreshToken is null) break;
                                 var authentication = context.HttpContext.RequestServices.GetRequiredService<IAuthenticationService>();
                                 var tokens = await authentication.RefreshAuthenticateAsync(refreshToken!);
                                 context.Token = tokens.AccessToken.Token;

@@ -32,23 +32,23 @@ public class AuthenticationService(
     public async Task<AuthenticationTokens> RefreshAuthenticateAsync(string refreshToken, CancellationToken cancellationToken = default)
     {
         Throw<UnauthorizedAccessException>.When.NullOrEmpty(refreshToken, RequiredNewAuthenticationMessage);
-        Throw<UnauthorizedAccessException>.When.False(
+        Throw<UnauthorizedAccessException>.When.True(
             await authenticationCache.IsRefreshTokenRevokedAsync(refreshToken), 
             RequiredNewAuthenticationMessage
         );
 
         var refreshTokenCache = await authenticationCache.GetRefreshTokenAsync(refreshToken);
         Throw<UnauthorizedAccessException>.When.Null(refreshTokenCache, RequiredNewAuthenticationMessage);
-        Throw<UnauthorizedAccessException>.When.False(refreshTokenCache.IsExpired, RequiredNewAuthenticationMessage);
+        Throw<UnauthorizedAccessException>.When.True(refreshTokenCache.IsExpired, RequiredNewAuthenticationMessage);
 
         await authenticationCache.RevokeRefreshTokenAsync(refreshToken);
+        await authenticationCookie.RemoveTokensAsync();
         
         var user = await repository.GetByIdAsync(refreshTokenCache.UserId);
         Throw<UnauthorizedAccessException>.When.Null(user, RequiredNewAuthenticationMessage);
 
         var tokens = await authenticationToken.RefreshTokensAsync(user, refreshTokenCache, cancellationToken);
         
-        await authenticationCookie.RemoveTokensAsync();
         await authenticationCookie.SetTokensAsync(tokens);
 
         await authenticationCache.SetRefreshTokenAsync(tokens.RefreshToken);
