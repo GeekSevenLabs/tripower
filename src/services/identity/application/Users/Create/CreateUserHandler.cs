@@ -6,7 +6,7 @@ namespace TriPower.Identity.Application.Users.Create;
 
 public class CreateUserHandler(
     IUserRepository repository, 
-    IUserService userService,
+    IUserCredentialsService userCredentialsService,
     ITriIdentityUnitOfWork unitOfWork) : IHandler<CreateUserRequest>
 {
     public async Task HandleAsync(CreateUserRequest request, CancellationToken cancellationToken = default)
@@ -17,9 +17,10 @@ public class CreateUserHandler(
         Throw.When.NotNull(user, "User with this email already exists.");
         
         var name = new NameVo(request.FirstName!, request.LastName!);
-        var passwordHash = await userService.GeneratePasswordHashAsync(request.Password, cancellationToken);
+        user = new User(name, request.Email);
         
-        user = new User(name, request.Email, passwordHash);
+        var passwordHash = await userCredentialsService.GeneratePasswordHashAsync(user, request.Password!, cancellationToken);
+        user.ChangePassword(passwordHash);
         
         repository.Add(user);
 

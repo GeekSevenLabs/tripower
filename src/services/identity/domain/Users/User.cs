@@ -6,14 +6,13 @@ public class User : Entity, IAggregateRoot
     protected User() { }
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
 
-    public User(NameVo name, string email, string passwordHash)
+    public User(NameVo name, string email)
     {
         Throw.When.InvalidEmail(email);
-        Throw.When.NullOrEmpty(passwordHash, "Password hash cannot be null or empty.");
         
         Name = name;
         Email = email;
-        PasswordHash = passwordHash;
+        PasswordHash = string.Empty;
     }
     
     public NameVo Name { get; private set; }
@@ -23,9 +22,15 @@ public class User : Entity, IAggregateRoot
     
     public string PasswordHash { get; private set; }
     
-    private void ConfirmEmail()
+    public void ConfirmEmail()
     {
         Throw.When.InvalidEmail(Email, "Cannot confirm email with an invalid format.");
         EmailConfirmed = true;
+    }
+    
+    public void ChangePassword(string newPasswordHash)
+    {
+        Throw.When.NullOrEmpty(newPasswordHash, "New password hash cannot be null or empty.");
+        PasswordHash = newPasswordHash;
     }
 }
