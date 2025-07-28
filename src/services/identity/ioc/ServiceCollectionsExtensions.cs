@@ -35,8 +35,6 @@ public static class ServiceCollectionsExtensions
         services.AddScoped<IUserCredentialsService, UserCredentialsService>();
         services.AddScoped<IAuthenticationTokenService, AuthenticationTokenService>();
         services.AddScoped<IAuthenticationCookieService, AuthenticationCookieService>();
-
-        
     }
 
     public static void AddTriIdentityAuthenticationAndAuthorization(this IServiceCollection services, IConfiguration configuration)
@@ -81,13 +79,11 @@ public static class ServiceCollectionsExtensions
                                 var refreshToken = await authenticationCookie.GetRefreshTokenAsync();
                                 if(refreshToken is null) break;
                                 var authentication = context.HttpContext.RequestServices.GetRequiredService<IAuthenticationService>();
-                                var tokens = await authentication.RefreshAuthenticateAsync(refreshToken!);
+                                var tokens = await authentication.RefreshAuthenticateAsync(refreshToken);
                                 context.Token = tokens.AccessToken.Token;
                                 break;
                             }
-                            case { IsExpired: false }:
-                                context.Token = accessToken.Token;
-                                break;
+                            case { IsExpired: false }: context.Token = accessToken.Token; break;
                         }
                     }
                 };
