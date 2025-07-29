@@ -11,6 +11,7 @@ public class TriIdentityDbContext(DbContextOptions<TriIdentityDbContext> options
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<Entity>().Property(entity => entity.CreatedAt).IsRequired();
         modelBuilder.ApplyConfiguration(new UserConfiguration());
     }
 
