@@ -7,6 +7,5 @@ public class TriElectricalServicesContext : IServicesContext
 {
     public static void ConfigureServices(IServiceCollection services, IConfiguration configuration)
     {
-        throw new NotImplementedException();
     }
 }

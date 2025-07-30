@@ -17,6 +17,7 @@
     <ItemGroup>
         <!--    Tri Kernel    -->
         <ProjectReference Include="..\..\..\kernel\server\TriPower.Kernel.Server.csproj"/>
+        <ProjectReference Include="..\..\..\services\electrical\infrastructure\TriPower.Electrical.Infrastructure.csproj" />
 
         <!--    Tri Client    -->
         <ProjectReference Include="..\client\TriPower.Presentation.Web.Client.csproj"/>
@@ -24,6 +25,10 @@
         <!--    Tri Identity Module    -->
         <ProjectReference Include="..\..\..\services\identity\application\TriPower.Identity.Application.csproj"/>
         <ProjectReference Include="..\..\..\services\identity\ioc\TriPower.Identity.IoC.csproj"/>
+    </ItemGroup>
+    
+    <ItemGroup>
+      <Folder Include="Services\" />
     </ItemGroup>
 
 </Project>

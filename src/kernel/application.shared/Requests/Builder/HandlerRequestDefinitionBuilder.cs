@@ -1,95 +1,104 @@
-// ReSharper disable once CheckNamespace
+﻿// ReSharper disable once CheckNamespace
 namespace TriPower;
 
-internal class HandlerRequestDefinitionBuilder<TRequest> : IHandlerRequestDefinitionBuilder<TRequest> where TRequest : IRequest
+internal abstract class HandlerRequestDefinitionBuilderBase<TChild, TRequest> :
+    IHandlerRequestDefinitionBuilderBase<TChild, TRequest>
+    where TRequest : IRequest 
+    where TChild : class, IHandlerRequestDefinitionBuilderBase<TChild, TRequest>
 {
-    private bool _requiredValidation = true;
-    private bool _requiredAuthentication = true;
-    private string[] _requiredRoles = [];
-    private string[] _requiredClaims = [];
-    private string? _path;
-    private  Func<TRequest, string>? _pathBuild;
-    private EndpointMethod? _method;
-    
-    public static HandlerRequestDefinitionBuilder<TRequest> Empty => new ();
-    
-    public IHandlerRequestDefinitionBuilder<TRequest> WithRequiredValidation(bool required = true)
+
+    protected HandlerRequestDefinitionBuilderBase(IHandlerRequestDefinition definition)
     {
-        _requiredValidation = required;
-        return this;
+        Throw.When.Null(definition, "Definition cannot be null.");
+        Definition = definition;
     }
     
-    public IHandlerRequestDefinitionBuilder<TRequest> WithRequiredAuthentication(bool required = true)
+    private TChild Child => this as TChild ?? throw new InvalidOperationException("The child type is not correctly set. (HandlerRequestDefinitionBuilderBase)");
+    protected IHandlerRequestDefinition Definition { get; }
+
+    public TChild WithName(string name)
     {
-        _requiredAuthentication = required;
-        return this;
-    }
-    public IHandlerRequestDefinitionBuilder<TRequest> WithRequiredRoles(params string[] roles)
-    {
-        _requiredRoles = roles;
-        return this;
-    }
-    public IHandlerRequestDefinitionBuilder<TRequest> WithRequiredClaims(params string[] claims)
-    {
-        _requiredClaims = claims;
-        return this;
+        Definition.ChangeName(name);
+        return Child;
     }
 
-    public IHandlerRequestDefinitionBuilder<TRequest> MapGet(string path, Func<TRequest, string> build) => WithPath(path).WithPathBuild(build).WithMethod(EndpointMethod.Get);
-    public IHandlerRequestDefinitionBuilder<TRequest> MapPost(string path, Func<TRequest, string> build) => WithPath(path).WithPathBuild(build).WithMethod(EndpointMethod.Post);
-    public IHandlerRequestDefinitionBuilder<TRequest> MapDelete(string path, Func<TRequest, string> build) => WithPath(path).WithPathBuild(build).WithMethod(EndpointMethod.Delete);
-
-    private HandlerRequestDefinitionBuilder<TRequest> WithPath(string path)
+    public TChild AllowAnonymous()
     {
-        ArgumentException.ThrowIfNullOrWhiteSpace(path);
+        Definition.ToSpecialist<ISecurityDefinition>().ChangeAuthentication(false, requiredRoles: [], requiredClaims: []);
+        return Child;
+    }
 
-        _path = path;
-        return this;
+    public TChild RequireAuthorization()
+    {
+        Definition.ToSpecialist<ISecurityDefinition>().ChangeAuthentication(true, requiredRoles: [], requiredClaims: []);
+        return Child;
+    }
+
+    public TChild WithValidator<TValidator>() where TValidator : IValidator<TRequest>
+    {
+        Definition.ToSpecialist<IValidationDefinition<TRequest>>().ChangeValidator<TValidator>();
+        return Child;
+    }
+
+    public TChild MapGet(Action<IRouterBuilder<TRequest>> routeBuilder)
+    {
+        return ChangeEndpointDefinition(EndpointMethod.Get, routeBuilder);
+    }
+
+    public TChild MapPost(Action<IRouterBuilder<TRequest>> routeBuilder)
+    {
+        return ChangeEndpointDefinition(EndpointMethod.Post, routeBuilder);
+    }
+
+    public TChild MapPut(Action<IRouterBuilder<TRequest>> routeBuilder)
+    {
+        return ChangeEndpointDefinition(EndpointMethod.Put, routeBuilder);
+    }
+
+    public TChild MapDelete(Action<IRouterBuilder<TRequest>> routeBuilder)
+    {
+        return ChangeEndpointDefinition(EndpointMethod.Delete, routeBuilder);
+    }
+
+    public TChild WithRequestTypeInfo(JsonTypeInfo<TRequest> typeInfo)
+    {
+        Definition.ToSpecialist<ISerializationDefinition<TRequest>>().ChangeRequestTypeInfo(typeInfo);
+        return Child;
     }
     
-    private HandlerRequestDefinitionBuilder<TRequest> WithPathBuild(Func<TRequest, string> build)
+    private TChild ChangeEndpointDefinition(EndpointMethod method, Action<IRouterBuilder<TRequest>> routeBuilder)
     {
-        _pathBuild = build;
-        return this;
+        var builder = RouteBuilder<TRequest>.Empty;
+        routeBuilder(builder);
+        Definition.ToSpecialist<IEndpointDefinition<TRequest>>().ChangeEndpoint(builder.BuildRoutePattern(), method, builder.BuildRouteGenerator());
+        return Child;
     }
     
-    private HandlerRequestDefinitionBuilder<TRequest> WithMethod(EndpointMethod method)
+    public IHandlerRequestDefinition Build() => Definition;
+
+}
+
+internal class HandlerRequestDefinitionBuilder<TRequest>() : 
+    HandlerRequestDefinitionBuilderBase<IHandlerRequestDefinitionBuilder<TRequest>, TRequest>(new HandlerRequestDefinition<TRequest>()),
+    IHandlerRequestDefinitionBuilder<TRequest>
+    where TRequest : IRequest
+{
+    public static HandlerRequestDefinitionBuilder<TRequest> Empty => new();
+}
+
+internal class HandlerRequestDefinitionBuilder<TRequest, TResponse>() : 
+    HandlerRequestDefinitionBuilderBase<IHandlerRequestDefinitionBuilder<TRequest, TResponse>, TRequest>(new HandlerRequestDefinition<TRequest, TResponse>()),
+    IHandlerRequestDefinitionBuilder<TRequest, TResponse>
+    where TRequest : IRequest, IRequest<TResponse> 
+    where TResponse : class
+{
+
+    public static HandlerRequestDefinitionBuilder<TRequest, TResponse> Empty => new();
+
+
+    public IHandlerRequestDefinitionBuilder<TRequest, TResponse> WithResponseTypeInfo(JsonTypeInfo<TResponse> typeInfo)
     {
-        if (!Enum.IsDefined(method))
-        {
-            throw new ArgumentOutOfRangeException(nameof(method), "Invalid endpoint method specified.");
-        }
-
-        _method = method;
-        return this;    
-    }
-
-    public IHandlerRequestDefinition Build()
-    {
-        if (string.IsNullOrWhiteSpace(_path))
-        {
-            throw new InvalidOperationException("Path must be specified.");
-        }
-
-        if (_method is null)
-        {
-            throw new InvalidOperationException("Method must be specified.");
-        }
-        
-        if (_pathBuild is null)
-        {
-            throw new InvalidOperationException("Path build function must be specified.");
-        }
-
-        return new HandlerRequestDefinition<TRequest>
-        {
-            RequiredValidation = _requiredValidation,
-            RequiredAuthentication = _requiredAuthentication,
-            RequiredRoles = _requiredRoles,
-            RequiredClaims = _requiredClaims,
-            Path = _path,
-            BuildPath = _pathBuild,
-            Method = _method.Value
-        };
+        Definition.ToSpecialist<ISerializationDefinition<TRequest, TResponse>>().ChangeResponseTypeInfo(typeInfo);
+        return this;
     }
 }

@@ -10,8 +10,6 @@ public class TriElectricalDbContext(DbContextOptions<TriElectricalDbContext> opt
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
-
-        modelBuilder.Entity<Entity>().Property(entity => entity.CreatedAt).IsRequired();
         
         modelBuilder.ApplyConfiguration(new ProjectConfiguration());
     }

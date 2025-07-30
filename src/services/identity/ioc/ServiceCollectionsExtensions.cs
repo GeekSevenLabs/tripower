@@ -1,5 +1,4 @@
-﻿using System.Security.Claims;
-using System.Text;
+﻿using System.Text;
 using Menso.Tools.Exceptions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -29,6 +28,7 @@ public static class ServiceCollectionsExtensions
 
         services.AddTransient<ITriIdentityUnitOfWork>(provider => provider.GetRequiredService<TriIdentityDbContext>());
 
+        // Repositories
         services.AddScoped<IUserRepository, UserRepository>();
 
         // Services

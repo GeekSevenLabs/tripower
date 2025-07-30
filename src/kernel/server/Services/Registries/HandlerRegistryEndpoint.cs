@@ -8,17 +8,18 @@ internal class HandlerRegistryEndpoint(IRequestProvider provider, IEndpointRoute
 {
     public IHandlerRegistry Register<THandler, TRequest>() where THandler : class, IHandler<TRequest> where TRequest : IRequest
     {
-        var definition = provider.GetRequiredDefinition<TRequest>();
+        var definition = (HandlerRequestDefinition<TRequest>)provider.GetRequiredDefinition<TRequest>();
 
         var endpoint = definition.Method switch
         {
             EndpointMethod.Post => builder.MapPost(definition.Path, (IHandlerMediator mediator, TRequest request) => mediator.SendAsync(request)),
             EndpointMethod.Get => builder.MapGet(definition.Path, (IHandlerMediator mediator, [AsParameters] TRequest request) => mediator.SendAsync(request)),
             EndpointMethod.Delete => builder.MapDelete(definition.Path, (IHandlerMediator mediator, [AsParameters] TRequest request) => mediator.SendAsync(request)),
+            EndpointMethod.Put => builder.MapPut(definition.Path, (IHandlerMediator mediator, TRequest request) => mediator.SendAsync(request)),
             _ => throw new NotSupportedException($"Endpoint method {definition.Method} is not supported.")
         };
 
-        endpoint.WithName(typeof(THandler).Name);
+        endpoint.WithName(definition.Name);
 
         ConfigureSecurity(endpoint, definition);
         ConfigureValidation(endpoint, definition);
@@ -26,19 +27,23 @@ internal class HandlerRegistryEndpoint(IRequestProvider provider, IEndpointRoute
         return this;
     }
 
-    public IHandlerRegistry Register<THandler, TRequest, TResponse>() where THandler : class, IHandler<TRequest, TResponse> where TRequest : IRequest<TResponse>
+    public IHandlerRegistry Register<THandler, TRequest, TResponse>() 
+        where THandler : class, IHandler<TRequest, TResponse> 
+        where TRequest : IRequest, IRequest<TResponse>
+        where TResponse : class
     {
-        var definition = provider.GetRequiredDefinition<TRequest>();
+        var definition = (HandlerRequestDefinition<TRequest, TResponse>)provider.GetRequiredDefinition<TRequest>();
 
         var endpoint = definition.Method switch
         {
-            EndpointMethod.Post => builder.MapPost(definition.Path, (IHandlerMediator mediator, TRequest request) => mediator.SendAsync<TRequest, TResponse>(request)),
+            EndpointMethod.Post => builder.MapPost(definition.Path, (IHandlerMediator mediator, [AsParameters] TRequest request) => mediator.SendAsync<TRequest, TResponse>(request)),
             EndpointMethod.Get => builder.MapGet(definition.Path, (IHandlerMediator mediator, [AsParameters] TRequest request) => mediator.SendAsync<TRequest, TResponse>(request)),
             EndpointMethod.Delete => builder.MapDelete(definition.Path, (IHandlerMediator mediator, [AsParameters] TRequest request) => mediator.SendAsync<TRequest, TResponse>(request)),
+            EndpointMethod.Put => builder.MapPut(definition.Path, (IHandlerMediator mediator, [AsParameters] TRequest request) => mediator.SendAsync<TRequest, TResponse>(request)),
             _ => throw new NotSupportedException($"Endpoint method {definition.Method} is not supported.")
         };
 
-        endpoint.WithName(typeof(THandler).Name);
+        endpoint.WithName(definition.Name);
 
         ConfigureSecurity(endpoint, definition);
         ConfigureValidation(endpoint, definition);
@@ -46,7 +51,7 @@ internal class HandlerRegistryEndpoint(IRequestProvider provider, IEndpointRoute
         return this;
     }
 
-    private static void ConfigureSecurity(RouteHandlerBuilder endpoint, IHandlerRequestDefinition definition)
+    private static void ConfigureSecurity<TRequest>(RouteHandlerBuilder endpoint, HandlerRequestDefinition<TRequest> definition) where TRequest : IRequest
     {
         switch (definition)
         {
@@ -62,7 +67,7 @@ internal class HandlerRegistryEndpoint(IRequestProvider provider, IEndpointRoute
         }
     }
     
-    private static void ConfigureValidation(RouteHandlerBuilder endpoint, IHandlerRequestDefinition definition)
+    private static void ConfigureValidation<TRequest>(RouteHandlerBuilder endpoint, HandlerRequestDefinition<TRequest> definition) where TRequest : IRequest
     {
         if (definition.RequiredValidation)
         {

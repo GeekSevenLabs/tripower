@@ -1,4 +1,7 @@
 using Scalar.AspNetCore;
+using TriPower.Electrical.Application;
+using TriPower.Electrical.Application.Shared;
+using TriPower.Electrical.Infrastructure;
 using TriPower.Identity.Application;
 using TriPower.Identity.Application.Shared;
 using TriPower.Identity.IoC;
@@ -8,7 +11,9 @@ using TriPower.Presentation.Web.Components;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddRazorComponents()
+builder
+    .Services
+    .AddRazorComponents()
     .AddInteractiveServerComponents()
     .AddInteractiveWebAssemblyComponents()
     .AddAuthenticationStateSerialization(options => options.SerializeAllClaims = true);
@@ -31,9 +36,24 @@ builder.Services.AddTriIdentityAuthenticationAndAuthorization(builder.Configurat
 // 1. Services and configurations for Identity
 
 builder.AddHandlerRequestServicesForServer(
-    requestRegistries: [TriIdentityRequestContext.ConfigureRequests],
-    handlerRegistries: [TriIdentityHandlersContext.ConfigureHandlers],
-    serviceRegistries: [TriIdentityServicesContext.ConfigureServices]
+    requestRegistries: [
+        TriIdentityRequestContext.ConfigureRequests,
+        TriElectricalRequestContext.ConfigureRequests
+    ],
+    handlerRegistries: [
+        TriIdentityHandlersContext.ConfigureHandlers,
+        TriElectricalHandlersContext.ConfigureHandlers
+    ],
+    serviceRegistries: [
+        TriIdentityServicesContext.ConfigureServices,
+        
+        TriElectricalServicesContext.ConfigureServices,
+        TriElectricalInfrastructureServicesContext.ConfigureServices
+    ],
+    serializerContexts: [
+        TriIdentitySerializerContext.Default,
+        TriElectricalSerializerContext.Default,
+    ]
 );
 
 var app = builder.Build();
@@ -52,7 +72,6 @@ else
     app.UseHsts();
 }
 
-
 app.UseStatusCodePagesWithReExecute("/not-found", createScopeForErrors: true);
 
 app.UseHttpsRedirection();
@@ -69,7 +88,10 @@ app.MapStaticAssets();
 // 1. Endpoints for Identity
 
 app.MapHandlerRequestEndpoints(
-    [TriIdentityHandlersContext.ConfigureHandlers]
+    [
+        TriIdentityHandlersContext.ConfigureHandlers,
+        TriElectricalHandlersContext.ConfigureHandlers
+    ]
 );
 
 app.MapRazorComponents<App>()

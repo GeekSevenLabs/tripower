@@ -6,9 +6,7 @@ public class TriElectricalRequestContext : IRequestContext
 {
     public static void ConfigureRequests(IRequestRegistry registry)
     {
-        registry.RegisterWithValidator<CreateProjectRequest, CreateProjectValidator>(builder =>
-        {
-            // builder.MapPost("/")
-        });
+        registry
+            .Register(new CreateProjectConfiguration());
     }
 }

@@ -13,9 +13,5 @@
         <ProjectReference Include="..\domain\TriPower.Electrical.Domain.csproj"/>
     </ItemGroup>
 
-    <ItemGroup>
-        <Folder Include="Projects\"/>
-    </ItemGroup>
-
 
 </Project>

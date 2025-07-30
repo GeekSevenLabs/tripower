@@ -7,55 +7,44 @@ internal class RequestRegistry(IRequestProvider provider, IServiceCollection ser
         where TRequest : IRequest
     {
         var builderInstance = HandlerRequestDefinitionBuilder<TRequest>.Empty;
-        builder.Invoke(builderInstance);
+        builder(builderInstance);
         var definition = builderInstance.Build();
         
         provider.AddDefinition<TRequest>(definition);
+        TryConfigureValidation(definition.ToSpecialist<IValidationDefinition<TRequest>>());
 
         return this;
     }
 
-    public IRequestRegistry RegisterWithValidator<TRequest, TValidator>(Action<IHandlerRequestDefinitionBuilder<TRequest>> builder) 
-        where TRequest : IRequest 
-        where TValidator : class, IValidator<TRequest>
+    public IRequestRegistry Register<TRequest>(IHandlerRequestConfiguration<TRequest> configuration) where TRequest : IRequest
     {
-        var builderInstance = HandlerRequestDefinitionBuilder<TRequest>.Empty;
-        builder.Invoke(builderInstance);
-        var definition = builderInstance.Build();
+        return Register<TRequest>(configuration.OnConfigure);
+    }
 
-        builderInstance.WithRequiredValidation();
+    public IRequestRegistry Register<TRequest, TResponse>(Action<IHandlerRequestDefinitionBuilder<TRequest, TResponse>> builder) 
+        where TRequest : IRequest, IRequest<TResponse> 
+        where TResponse : class
+    {
+        var builderInstance = HandlerRequestDefinitionBuilder<TRequest, TResponse>.Empty;
+        builder(builderInstance);
+        var definition = builderInstance.Build();
         
         provider.AddDefinition<TRequest>(definition);
-        services.AddScoped<IValidator<TRequest>, TValidator>();
-
+        TryConfigureValidation(definition.ToSpecialist<IValidationDefinition<TRequest>>());
+        
         return this;
     }
 
-    public IRequestRegistry Register<TRequest, TResponse>(Action<IHandlerRequestDefinitionBuilder<TRequest>> builder) 
-        where TRequest : IRequest<TResponse>
+    public IRequestRegistry Register<TRequest, TResponse>(IHandlerRequestConfiguration<TRequest, TResponse> configuration) where TRequest : IRequest, IRequest<TResponse> where TResponse : class
     {
-        var builderInstance = HandlerRequestDefinitionBuilder<TRequest>.Empty;
-        builder.Invoke(builderInstance);
-        var definition = builderInstance.Build();
-        
-        provider.AddDefinition<TRequest>(definition);
-
-        return this;
+        return Register<TRequest, TResponse>(configuration.OnConfigure);
     }
 
-    public IRequestRegistry RegisterWithValidator<TRequest, TResponse, TValidator>(Action<IHandlerRequestDefinitionBuilder<TRequest>> builder) 
-        where TRequest : IRequest<TResponse> 
-        where TValidator : class, IValidator<TRequest>
+    private void TryConfigureValidation<TRequest>(IValidationDefinition<TRequest> definition) where TRequest : IRequest
     {
-        var builderInstance = HandlerRequestDefinitionBuilder<TRequest>.Empty;
-        builder.Invoke(builderInstance);
-        var definition = builderInstance.Build();
-
-        builderInstance.WithRequiredValidation();
-        
-        provider.AddDefinition<TRequest>(definition);
-        services.AddScoped<IValidator<TRequest>, TValidator>();
-
-        return this;
+        if (definition.RequiredValidation)
+        {
+            services.AddTransient(typeof(IValidator<TRequest>), definition.ValidatorType);
+        }
     }
 }

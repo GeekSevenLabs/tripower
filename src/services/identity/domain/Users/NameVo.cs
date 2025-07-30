@@ -1,6 +1,6 @@
 ﻿namespace TriPower.Identity.Domain.Users;
 
-public readonly record struct NameVo
+public record NameVo
 {
     public NameVo() { }
     

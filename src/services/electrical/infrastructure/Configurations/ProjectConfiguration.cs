@@ -25,6 +25,10 @@ public class ProjectConfiguration : IEntityTypeConfiguration<Project>
         builder
             .Property(project => project.Phases)
             .IsRequired();
+        
+        builder
+            .Property(project => project.CreatedAt)
+            .IsRequired();
 
         // Relationships
         builder

@@ -13,7 +13,7 @@ using TriPower.Identity.Infrastructure.Contexts;
 namespace TriPower.Identity.Infrastructure.Migrations
 {
     [DbContext(typeof(TriIdentityDbContext))]
-    [Migration("20250728110942_Initial")]
+    [Migration("20250729235714_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -50,6 +50,8 @@ namespace TriPower.Identity.Infrastructure.Migrations
 
                     b.ComplexProperty<Dictionary<string, object>>("Name", "TriPower.Identity.Domain.Users.User.Name#NameVo", b1 =>
                         {
+                            b1.IsRequired();
+
                             b1.Property<string>("First")
                                 .IsRequired()
                                 .HasMaxLength(256)
@@ -66,7 +68,7 @@ namespace TriPower.Identity.Infrastructure.Migrations
                     b.HasIndex("Email")
                         .IsUnique();
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 #pragma warning restore 612, 618
         }
