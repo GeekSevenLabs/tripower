@@ -1,0 +1,36 @@
+﻿@page "/projects"
+@using TriPower.Electrical.Application.Shared.Projects.List
+
+<TriPage Title="Projetos">
+    <Body>
+    
+    <MudTable ServerData="ServerReloadAsync" Dense="true" Hover="true" @ref="_table">
+        <ToolBarContent>
+            <MudText Typo="Typo.h6">Projetos</MudText>
+            <MudSpacer />
+            <MudTextField T="string" ValueChanged="@(s=>OnSearch(s))" Placeholder="Pesquisar" Adornment="Adornment.Start"
+                          AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"/>
+        </ToolBarContent>
+        <HeaderContent>
+            <MudTh><MudTableSortLabel SortLabel="@nameof(ListProjectsResponseItem.Name)" T="ListProjectsResponseItem">Nome</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortLabel="@nameof(ListProjectsResponseItem.Voltage)" T="ListProjectsResponseItem">Tensão</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortLabel="@nameof(ListProjectsResponseItem.Phases)" T="ListProjectsResponseItem">Fases</MudTableSortLabel></MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd DataLabel="Nome">@context.Name</MudTd>
+            <MudTd DataLabel="Tensão">@context.Voltage</MudTd>
+            <MudTd DataLabel="Fases">@context.Phases</MudTd>
+        </RowTemplate>
+        <NoRecordsContent>
+            <MudText>Nenhum projeto encontrado.</MudText>
+        </NoRecordsContent>
+        <LoadingContent>
+            <MudText>Pesquisando...</MudText>
+        </LoadingContent>
+        <PagerContent>
+            <MudTablePager />
+        </PagerContent>
+    </MudTable>
+    
+    </Body>
+</TriPage>

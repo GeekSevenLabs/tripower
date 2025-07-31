@@ -9,19 +9,26 @@
     </PropertyGroup>
 
     <ItemGroup>
-        
+        <PackageReference Include="Scalar.AspNetCore" Version="2.6.4"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.0-preview.6.25358.103" />
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.0-preview.6.25358.103" />
     </ItemGroup>
     
     <ItemGroup>
         <!--    Tri Kernel    -->
         <ProjectReference Include="..\..\..\kernel\server\TriPower.Kernel.Server.csproj"/>
+        <ProjectReference Include="..\..\..\services\electrical\infrastructure\TriPower.Electrical.Infrastructure.csproj" />
 
         <!--    Tri Client    -->
         <ProjectReference Include="..\client\TriPower.Presentation.Web.Client.csproj"/>
-        
+
         <!--    Tri Identity Module    -->
         <ProjectReference Include="..\..\..\services\identity\application\TriPower.Identity.Application.csproj"/>
         <ProjectReference Include="..\..\..\services\identity\ioc\TriPower.Identity.IoC.csproj"/>
+    </ItemGroup>
+    
+    <ItemGroup>
+      <Folder Include="Services\" />
     </ItemGroup>
 
 </Project>

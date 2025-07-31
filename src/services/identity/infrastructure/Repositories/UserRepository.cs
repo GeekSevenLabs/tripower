@@ -13,4 +13,6 @@ public class UserRepository(TriIdentityDbContext db) : IUserRepository
         email = email.ToUpperInvariant();
         return await db.Users.FirstOrDefaultAsync(user => user.Email == email);
     }
+
+    public async Task<User?> GetByIdAsync(Guid userId) => await db.Users.FindAsync(userId);
 }

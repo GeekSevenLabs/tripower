@@ -9,6 +9,7 @@ public partial class AccountRegisterPage : ComponentBase
     
     [Inject] public required IHandlerMediator HandlerMediator { get; set; }
     [Inject] public required IUiUtils UiUtils { get; set; }
+    [Inject] public required NavigationManager Navigation { get; set; }
 
     private async Task HandleValidSubmitAsync()
     {
@@ -18,6 +19,7 @@ public partial class AccountRegisterPage : ComponentBase
             .ShowBusy("Creating account...")
             .ShowError()
             .ShowSuccess("Account created successfully!");
-
+        
+        Navigation.NavigateTo("/account/login", true);
     }
 }

@@ -1,0 +1,7 @@
+﻿@inject NavigationManager Navigation
+
+<AuthorizeView>
+    <Authorized>
+        @{ Navigation.NavigateTo("/overview"); }
+    </Authorized>
+</AuthorizeView>

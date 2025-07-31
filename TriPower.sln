@@ -57,6 +57,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TriPower.Kernel.Client", "s
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TriPower.Kernel.Server", "src\kernel\server\TriPower.Kernel.Server.csproj", "{D306C377-F160-495B-A442-5C5AD64B202C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5. Laboratory", "5. Laboratory", "{A91BB2C7-4369-4374-A82D-B3264B2A095A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TriPower.Laboratory", "tests\laboratory\TriPower.Laboratory.csproj", "{DC684BE9-430E-4CFD-8FE8-E62A23D3E6B2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -89,6 +93,7 @@ Global
 		{730DA051-2082-4AD2-A44D-F04173A2C86F} = {8A729BDE-FDEF-48E5-8648-D8570634E116}
 		{E7A78EE0-E988-496F-8A9F-4DB32913A707} = {01B43A2E-24D7-4C4D-9B54-F0D32BAB7C05}
 		{D306C377-F160-495B-A442-5C5AD64B202C} = {01B43A2E-24D7-4C4D-9B54-F0D32BAB7C05}
+		{DC684BE9-430E-4CFD-8FE8-E62A23D3E6B2} = {A91BB2C7-4369-4374-A82D-B3264B2A095A}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{115F3888-7EC2-44A8-B8FC-738B7CBFED63}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -171,5 +176,9 @@ Global
 		{D306C377-F160-495B-A442-5C5AD64B202C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D306C377-F160-495B-A442-5C5AD64B202C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D306C377-F160-495B-A442-5C5AD64B202C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC684BE9-430E-4CFD-8FE8-E62A23D3E6B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC684BE9-430E-4CFD-8FE8-E62A23D3E6B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC684BE9-430E-4CFD-8FE8-E62A23D3E6B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC684BE9-430E-4CFD-8FE8-E62A23D3E6B2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

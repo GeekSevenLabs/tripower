@@ -3,6 +3,12 @@ namespace TriPower;
 
 public interface IHandlerRegistry
 {
-    IHandlerRegistry Register<THandler, TRequest>() where THandler : class, IHandler<TRequest> where TRequest : IRequest;
-    IHandlerRegistry Register<THandler, TRequest, TResponse>() where THandler : class, IHandler<TRequest, TResponse> where TRequest : IRequest<TResponse>;
+    IHandlerRegistry Register<THandler, TRequest>()
+        where THandler : class, IHandler<TRequest> 
+        where TRequest : IRequest;
+    
+    IHandlerRegistry Register<THandler, TRequest, TResponse>()
+        where THandler : class, IHandler<TRequest, TResponse> 
+        where TRequest : IRequest, IRequest<TResponse>
+        where TResponse : class;
 }

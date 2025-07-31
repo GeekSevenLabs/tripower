@@ -12,6 +12,8 @@ public static class ServiceCollectionExtensions
         
         public void AddKernelServerServices()
         {
+            services.AddProblemDetails();
+            services.AddScoped<IUserContext, UserContext>();
             services.AddScoped<IUiUtils, UiUtils>();
         }
     }

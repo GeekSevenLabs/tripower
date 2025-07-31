@@ -1,7 +1,8 @@
 ﻿// ReSharper disable once CheckNamespace
 namespace TriPower;
 
-public abstract class TaskWrapperBase<TChild>(IUiUtils ui) : ITaskWrapperBase<TChild>
+public abstract class TaskWrapperBase<TChild>(IUiUtils ui) : 
+    ITaskWrapperBase<TChild>
     where TChild : class, ITaskWrapperBase<TChild>
 {
     private bool _showError = false;

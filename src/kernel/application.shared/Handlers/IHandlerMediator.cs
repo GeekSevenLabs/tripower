@@ -3,6 +3,10 @@ namespace TriPower;
 
 public interface IHandlerMediator
 {
-    Task SendAsync<TRequest>(TRequest request, CancellationToken cancellationToken = default) where TRequest : IRequest;
-    Task<TResponse> SendAsync<TRequest, TResponse>(TRequest request, CancellationToken cancellationToken = default) where TRequest : IRequest<TResponse>;
+    Task SendAsync<TRequest>(TRequest request, CancellationToken cancellationToken = default) 
+        where TRequest : IRequest;
+    
+    Task<TResponse> SendAsync<TRequest, TResponse>(TRequest request, CancellationToken cancellationToken = default) 
+        where TRequest : IRequest, IRequest<TResponse>
+        where TResponse : class;
 }

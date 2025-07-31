@@ -5,5 +5,6 @@ public enum EndpointMethod
 {
     Get = 1,
     Post = 11,
-    Delete = 21
+    Put = 21,
+    Delete = 31
 }
