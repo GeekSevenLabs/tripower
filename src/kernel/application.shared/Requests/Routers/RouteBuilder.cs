@@ -8,7 +8,7 @@ internal class RouteBuilder<TRequest> : IRouterBuilder<TRequest> where TRequest 
     private int _segmentsWithParametersIndex;
     private int _queryParametersIndex;
 
-    public static RouteBuilder<TRequest> Empty = new();
+    public static RouteBuilder<TRequest> Empty => new();
 
     public IRouterBuilder<TRequest> AddSegment(string segment)
     {
@@ -52,6 +52,49 @@ internal class RouteBuilder<TRequest> : IRouterBuilder<TRequest> where TRequest 
         return this;
     }
 
+    public IRouterBuilder<TRequest> AddQueryParameter()
+    {
+        Throw.When.False(typeof(TRequest).IsAssignableTo(typeof(QueryParameter)),
+            $"{nameof(TRequest)} must be assignable to {nameof(QueryParameter)} to use {nameof(AddQueryParameter)} without parameters.");
+        
+        _queryParameters.Add(new Fragment
+        {
+            Order = _queryParametersIndex++,
+            Name = nameof(QueryParameter.QueryPage),
+            IsParameter = true,
+            ParameterAccessor = request => (request as QueryParameter)?.QueryPage
+        });
+        _queryParameters.Add(new Fragment
+        {
+            Order = _queryParametersIndex++,
+            Name = nameof(QueryParameter.QueryPageSize),
+            IsParameter = true,
+            ParameterAccessor = request => (request as QueryParameter)?.QueryPageSize
+        });
+        _queryParameters.Add(new Fragment
+        {
+            Order = _queryParametersIndex++,
+            Name = nameof(QueryParameter.QuerySearchString),
+            IsParameter = true,
+            ParameterAccessor = request => (request as QueryParameter)?.QuerySearchString
+        });
+        _queryParameters.Add(new Fragment
+        {
+            Order = _queryParametersIndex++,
+            Name = nameof(QueryParameter.QuerySortLabel),
+            IsParameter = true,
+            ParameterAccessor = request => (request as QueryParameter)?.QuerySortLabel
+        });
+        _queryParameters.Add(new Fragment
+        {
+            Order = _queryParametersIndex++,
+            Name = nameof(QueryParameter.QuerySortDirection),
+            IsParameter = true,
+            ParameterAccessor = request => (request as QueryParameter)?.QuerySortDirection
+        });
+        return this;
+    }
+
     public string BuildRoutePattern()
     {
         var routePattern = string.Join("/", _segmentsWithPathParameters
@@ -88,7 +131,7 @@ internal class RouteBuilder<TRequest> : IRouterBuilder<TRequest> where TRequest 
         public required int Order { get; init; }
         public required string Name { get; init; }
         public required bool IsParameter { get; init; }
-        public required Func<TRequest, object> ParameterAccessor { get; init; }
+        public required Func<TRequest, object?> ParameterAccessor { get; init; }
     }
 
     private static string GetMemberName(Expression<Func<TRequest, object>> expression)

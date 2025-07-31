@@ -49,11 +49,11 @@ public class HandlerMediatorClient(IRequestProvider provider, HttpClient client)
         throw new HttpRequestException($"Request failed with status code {response.StatusCode}: {content}", null, response.StatusCode);
     }
 
-    private static StringContent CreateContent<TRequest>(HandlerRequestDefinition<TRequest> definition, TRequest request) where TRequest : IRequest
+    private static StringContent? CreateContent<TRequest>(HandlerRequestDefinition<TRequest> definition, TRequest request) where TRequest : IRequest
     {
         return definition.Method switch
         {
-            EndpointMethod.Get => new StringContent(""), // GET requests typically do not have a body
+            EndpointMethod.Get => null, // GET requests typically do not have a body
             EndpointMethod.Post => new StringContent(JsonSerializer.Serialize(request, definition.RequestTypeInfo), Encoding.UTF8, "application/json"),
             EndpointMethod.Delete => new StringContent(JsonSerializer.Serialize(request, definition.RequestTypeInfo), Encoding.UTF8, "application/json"),
             EndpointMethod.Put => new StringContent(JsonSerializer.Serialize(request, definition.RequestTypeInfo), Encoding.UTF8, "application/json"),

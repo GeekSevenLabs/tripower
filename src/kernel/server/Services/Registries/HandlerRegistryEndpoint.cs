@@ -36,10 +36,10 @@ internal class HandlerRegistryEndpoint(IRequestProvider provider, IEndpointRoute
 
         var endpoint = definition.Method switch
         {
-            EndpointMethod.Post => builder.MapPost(definition.Path, (IHandlerMediator mediator, [AsParameters] TRequest request) => mediator.SendAsync<TRequest, TResponse>(request)),
+            EndpointMethod.Post => builder.MapPost(definition.Path, (IHandlerMediator mediator, TRequest request) => mediator.SendAsync<TRequest, TResponse>(request)),
             EndpointMethod.Get => builder.MapGet(definition.Path, (IHandlerMediator mediator, [AsParameters] TRequest request) => mediator.SendAsync<TRequest, TResponse>(request)),
             EndpointMethod.Delete => builder.MapDelete(definition.Path, (IHandlerMediator mediator, [AsParameters] TRequest request) => mediator.SendAsync<TRequest, TResponse>(request)),
-            EndpointMethod.Put => builder.MapPut(definition.Path, (IHandlerMediator mediator, [AsParameters] TRequest request) => mediator.SendAsync<TRequest, TResponse>(request)),
+            EndpointMethod.Put => builder.MapPut(definition.Path, (IHandlerMediator mediator, TRequest request) => mediator.SendAsync<TRequest, TResponse>(request)),
             _ => throw new NotSupportedException($"Endpoint method {definition.Method} is not supported.")
         };
 

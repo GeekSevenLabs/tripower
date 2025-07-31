@@ -1,4 +1,5 @@
 ﻿using TriPower.Electrical.Application.Shared.Projects.Create;
+using TriPower.Electrical.Application.Shared.Projects.List;
 
 namespace TriPower.Electrical.Application.Shared;
 
@@ -7,6 +8,8 @@ namespace TriPower.Electrical.Application.Shared;
 #region Projects
 
 [JsonSerializable(typeof(CreateProjectRequest))]
+[JsonSerializable(typeof(ListProjectsRequest))]
+[JsonSerializable(typeof(ListProjectsResponse))]
 
 #endregion
 

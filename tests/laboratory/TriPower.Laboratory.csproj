@@ -9,6 +9,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\..\src\kernel\application.shared\TriPower.Kernel.Application.Shared.csproj" />
         <ProjectReference Include="..\..\src\kernel\core\TriPower.Kernel.csproj"/>
     </ItemGroup>
 

@@ -1,0 +1,34 @@
+﻿@namespace TriPower
+@inherits TriComponentBase
+
+@if (_isLoading)
+{
+    <MudStack AlignItems="AlignItems.Center" Justify="Justify.Center" Spacing="4" Class="py-4">
+    
+        <MudProgressCircular Indeterminate Size="Size.Large" Color="Color.Primary"/>
+        <MudText Typo="Typo.h6" Align="Align.Center" Class="mt-2">Carregando...</MudText>
+    
+    </MudStack>
+} 
+else if (HasException)
+{
+    <MudStack AlignItems="AlignItems.Center" Justify="Justify.Center" Spacing="4" Class="py-4">
+    
+        <MudAlert Severity="Severity.Error">
+            <MudText Typo="Typo.h6" Align="Align.Center">@_exception.GetTitle()</MudText>
+            <MudText Typo="Typo.body2" Align="Align.Center">@_exception.GetMessage()</MudText>
+        </MudAlert>
+        
+        @if (CanRetry)
+        {
+            <MudButton Color="Color.Primary" OnClick="@LoadAsync" StartIcon="@Icons.Material.Filled.Refresh" Variant="Variant.Filled">
+                Tentar novamente
+            </MudButton>
+        }
+    
+    </MudStack>
+}
+else
+{
+    @ChildContent
+}

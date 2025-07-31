@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using TriPower;
+using TriPower.Electrical.Application.Shared;
 using TriPower.Identity.Application.Shared;
 using TriPower.Presentation.Web.Client.Services;
 
@@ -15,7 +16,8 @@ builder.Services.AddScoped<AuthService>();
 builder.Services.AddTriHandlerMediatorForClient();
 
 builder.Services.AddHandlerRequestServicesForClient(
-    TriIdentityRequestContext.ConfigureRequests
+    TriIdentityRequestContext.ConfigureRequests,
+    TriElectricalRequestContext.ConfigureRequests
 );
 
 // End of Handler and Request services registration =======

@@ -24,7 +24,7 @@ public class UserContext(IHttpContextAccessor accessor) : IUserContext
     {
         get
         {
-            var idString = User.FindFirst(JwtRegisteredClaimNames.Sub)?.Value;
+            var idString = User.FindFirst(TriClaimTypes.UserId)?.Value;
             Throw.When.Null(idString, "User ID claim is missing in the JWT.");
             return Guid.Parse(idString);
         }

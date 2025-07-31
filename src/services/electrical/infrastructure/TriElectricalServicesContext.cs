@@ -1,7 +1,9 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using TriPower.Electrical.Application.Projects;
 using TriPower.Electrical.Domain.Projects;
 using TriPower.Electrical.Infrastructure.Contexts;
+using TriPower.Electrical.Infrastructure.Queries;
 using TriPower.Electrical.Infrastructure.Repositories;
 
 namespace TriPower.Electrical.Infrastructure;
@@ -20,5 +22,8 @@ public class TriElectricalInfrastructureServicesContext : IServicesContext
         
         // Repositories
         services.AddScoped<IProjectRepository, ProjectRepository>();
+        
+        // Queries
+        services.AddScoped<IProductQueries, ProductQueries>();
     }
 }

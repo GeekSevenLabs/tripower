@@ -58,6 +58,7 @@ public class AuthenticationTokenService(IOptions<JwtOptions> options) : IAuthent
             new Claim(JwtRegisteredClaimNames.FamilyName, user.Name.Last),
             new Claim(ClaimTypes.Name, user.Name.First),
             new Claim(ClaimTypes.NameIdentifier, user.Name.First),
+            new Claim(TriClaimTypes.UserId, user.Id.ToString()),
             new Claim(JwtRegisteredClaimNames.Email, user.Email),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
         };

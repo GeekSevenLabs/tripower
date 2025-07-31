@@ -27,6 +27,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\..\services\identity\infrastructure\TriPower.Identity.Infrastructure.csproj" />
         <ProjectReference Include="..\application\TriPower.Kernel.Application.csproj"/>
         <ProjectReference Include="..\client\TriPower.Kernel.Client.csproj" />
         <ProjectReference Include="..\core\TriPower.Kernel.csproj" />
