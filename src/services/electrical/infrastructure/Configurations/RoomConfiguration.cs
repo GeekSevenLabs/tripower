@@ -1,4 +1,5 @@
-﻿using TriPower.Electrical.Domain.Rooms;
+﻿using TriPower.Electrical.Domain.Projects;
+using TriPower.Electrical.Domain.Projects.Entities;
 
 namespace TriPower.Electrical.Infrastructure.Configurations;
 
@@ -7,6 +8,7 @@ internal class RoomConfiguration : IEntityTypeConfiguration<Room>
     public void Configure(EntityTypeBuilder<Room> builder)
     {
         builder.HasKey(room => room.Id);
+        builder.Property(room => room.Id).ValueGeneratedNever();
         
         // Properties
         builder
@@ -59,8 +61,9 @@ internal class RoomConfiguration : IEntityTypeConfiguration<Room>
         // Relationships
         
         builder
-            .HasOne(room => room.Project)
+            .HasOne<Project>()
             .WithMany(project => project.Rooms)
-            .HasForeignKey(room => room.ProjectId);
+            .HasForeignKey(room => room.ProjectId)
+            .HasPrincipalKey(project => project.Id);
     }
 }

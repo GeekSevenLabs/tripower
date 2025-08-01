@@ -18,7 +18,7 @@
         <TriSection Label="Cômodos">
             <CommandBar>
                 <MudButton 
-                    Variant="Variant.Outlined" Size="Size.Small" Color="Color.Primary" Href="@($"/projects/{_project.Id}/rooms/create")"
+                    Variant="Variant.Outlined" Size="Size.Small" Color="Color.Primary" Href="@($"/projects/{_project.Id}/rooms/new")"
                     StartIcon="@Icons.Material.Filled.Add">
                     Novo
                 </MudButton>
@@ -33,7 +33,8 @@
                         <MudTh>Qtd TUGs</MudTh>
                         <MudTh>Modificador TUGs</MudTh>
                         <MudTh>Carga TUGS Corrigida</MudTh>
-                        <MudTh>Qtd TUGs Corrigidas</MudTh>
+                        <MudTh>Qtd TUGs Corrigida</MudTh>
+                        <MudTh>#</MudTh>
                     </HeaderContent>
                     <RowTemplate Context="room">
                         <MudTd DataLabel="Name">@room.Name</MudTd>
@@ -43,6 +44,11 @@
                         <MudTd DataLabel="Modificador TUGs">@room.GeneralSocketsModifier</MudTd>
                         <MudTd DataLabel="Carga TUGS Corrigida">@room.CorrectedGeneralSocketsLoad VA</MudTd>
                         <MudTd DataLabel="Qtd TUGs Corrigidas">@room.CorrectedGeneralSocketsCount</MudTd>
+                        <MudTd DataLabel="#">
+                            <MudIconButton
+                                Icon="@Icons.Material.Filled.Edit" Color="Color.Primary" 
+                                Href="@($"/projects/{_project.Id}/rooms/{room.Id}")"/>
+                        </MudTd>
                     </RowTemplate>
                     <NoRecordsContent>
                         <MudText>Nenhum cômodo encontrado para esse projeto.</MudText>

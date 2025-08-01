@@ -4,6 +4,8 @@ namespace TriPower.Presentation.Web.Client.Pages.Projects;
 
 public partial class CreateProjectPage : ComponentBase
 {
+    private const string BackLink = "/projects";
+    
     private CreateProjectRequest Request { get; } = new();
     private CreateProjectValidator Validator { get; } = new();
     
@@ -20,6 +22,6 @@ public partial class CreateProjectPage : ComponentBase
             .ShowError()
             .ShowSuccess("Project created successfully!");
         
-        Navigation.NavigateTo("/projects");
+        Navigation.NavigateTo(BackLink);
     } 
 }

@@ -7,6 +7,7 @@ public class ProjectConfiguration : IEntityTypeConfiguration<Project>
     public void Configure(EntityTypeBuilder<Project> builder)
     {
         builder.HasKey(project => project.Id);
+        builder.Property(project => project.Id).ValueGeneratedNever();
 
         // Properties
         builder
@@ -38,7 +39,7 @@ public class ProjectConfiguration : IEntityTypeConfiguration<Project>
 
         builder
             .HasMany(project => project.Rooms)
-            .WithOne(room => room.Project)
+            .WithOne()
             .HasForeignKey(room => room.ProjectId)
             .HasPrincipalKey(project => project.Id)
             .OnDelete(DeleteBehavior.Cascade);

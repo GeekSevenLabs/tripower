@@ -1,4 +1,4 @@
-﻿using TriPower.Electrical.Domain.Rooms;
+﻿using Room = TriPower.Electrical.Domain.Projects.Entities.Room;
 
 namespace TriPower.Electrical.Domain.Projects;
 
@@ -28,4 +28,35 @@ public partial class Project : Entity, IAggregateRoot
     public IReadOnlyCollection<Room> Rooms => _rooms.AsReadOnly();
     
     public Guid UserId { get; private set; }
+
+    public Room EditRoom(Guid? roomId, string name, RoomClassification classification, RoomType type)
+    {
+        Throw.When.NullOrEmpty(name, "Room name cannot be null or empty.");
+        
+        if (roomId.HasValue)
+        {
+            var existingRoom = _rooms.FirstOrDefault(room => room.Id == roomId.Value);
+            Throw.When.Null(existingRoom, $"Room with ID {roomId.Value} does not exist.");
+            existingRoom.Update(name, classification, type);
+            return existingRoom;
+        }
+
+        var newRoom = new Room(name, classification, type, Id);
+        _rooms.Add(newRoom);
+        roomId = newRoom.Id;
+        
+        Throw.When.Null(roomId, "Room ID cannot be null after creation or update.");
+        return newRoom;
+    }
+    
+    public void ChangeRoomMeasurements(Guid roomId, decimal perimeter, decimal area, int modifier)
+    {
+        Throw.When.True(perimeter <= 0, "Perimeter must be greater than zero.");
+        Throw.When.True(area <= 0, "Area must be greater than zero.");
+        
+        var room = _rooms.FirstOrDefault(r => r.Id == roomId);
+        Throw.When.Null(room, $"Room with ID {roomId} does not exist.");
+        
+        room.ChangeMeasurements(perimeter, area, modifier);
+    }
 }

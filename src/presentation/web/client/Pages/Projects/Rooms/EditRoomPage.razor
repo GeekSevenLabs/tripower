@@ -1,0 +1,96 @@
+﻿@page "/projects/{ProjectId:guid}/rooms/new"
+@page "/projects/{ProjectId:guid}/rooms/{RoomId}"
+@using TriPower.Electrical.Domain.Shared
+
+<TriPage
+    Title="@(RoomId.HasValue ? "Editar Cômodo" : "Criar Cômodo")"
+    BackLink="@BackLink">
+
+    <Body>
+
+    <TriLoader Load="LoadAsync" CanRetry>
+
+        <TriEditForm Model="Request" Validator="Validator" OnValidSubmit="HandleValidSubmitAsync">
+
+            <TriSection Label="Identificação">
+                <Content>
+                    <TriGrid ColsMd="2">
+                        <TriTextField @bind-Value="Request.Name" Label="Nome do Cômodo"/>
+                        <TriDecimalField @bind-Value="Request.Area" Label="Àrea"/>
+                        <TriDecimalField @bind-Value="Request.Perimeter" Label="Perímetro"/>
+                    </TriGrid>
+                </Content>
+            </TriSection>
+
+            <TriSection Label="Classificação">
+                <Content>
+                    <TriGrid ColsSm="2">
+                        <TriEnumSelectField
+                            TEnum="RoomClassification" Label="Classificação do ambiente"
+                            @bind-Value="@Request.Classification"/>
+                        <TriEnumSelectField
+                            TEnum="RoomType" Label="Tipo do ambiente" @bind-Value="@Request.Type"/>
+                    </TriGrid>
+                </Content>
+            </TriSection>
+
+            <TriSection Label="Carga">
+                <Content>
+                    <TriGrid>
+                        <TriIntegerField
+                            @bind-Value="Request.GeneralSocketsModifier"
+                            Label="Modificador"
+                            HelperText="Server para ajustar a quantidade de tomadas TUGs para + ou -"/>
+                    </TriGrid>
+                    <TriGrid ColsMd="3">
+
+                        @if (Request.CanCalculateLighting)
+                        {
+                            <TriDataDisplay Label="Carga Iluminação Recomendada">
+                                @LightingMath.CalculateMinimumLoad(Request.Area.GetValueOrDefault())
+                            </TriDataDisplay>
+                        }
+
+                        @if (Request.CanCalculateSockets)
+                        {
+                            var generalSockets = GeneralSocketsMath.Calculate(
+                                Request.Perimeter.GetValueOrDefault(),
+                                Request.GeneralSocketsModifier.GetValueOrDefault(),
+                                Request.Type is RoomType.Wet
+                            );
+
+                            <TriDataDisplay
+                                Label="Quantidade TUGs Recomendada">@generalSockets.RequiredCount</TriDataDisplay>
+                            <TriDataDisplay Label="Carga TUGs Recomendada">@generalSockets.RequiredLoad</TriDataDisplay>
+
+                            <TriDataDisplay
+                                Label="Quantidade TUGs Corrigida">@generalSockets.CorrectedCount</TriDataDisplay>
+                            <TriDataDisplay Label="Carga TUGs Corrigida">@generalSockets.CorrectedLoad</TriDataDisplay>
+                        }
+
+                    </TriGrid>
+                </Content>
+            </TriSection>
+
+            <TriSection Label="Validações">
+                <Content>
+                    <ValidationSummary/>
+                </Content>
+            </TriSection>
+
+            <TriCommandBar BackLink="@BackLink">
+                <MudButton
+                    Variant="Variant.Filled" Color="Color.Primary" ButtonType="ButtonType.Submit"
+                    StartIcon="@Icons.Material.Filled.Save">
+                    Gravar
+                </MudButton>
+            </TriCommandBar>
+
+        </TriEditForm>
+
+    </TriLoader>
+    
+
+    </Body>
+
+</TriPage>

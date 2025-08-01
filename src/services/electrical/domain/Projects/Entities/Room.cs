@@ -1,9 +1,9 @@
-﻿using TriPower.Electrical.Domain.Projects;
+﻿using TriPower.Electrical.Domain.Projects.ValueObjects;
 
-namespace TriPower.Electrical.Domain.Rooms;
+namespace TriPower.Electrical.Domain.Projects.Entities;
 
 [HasPrivateEmptyConstructor]
-public partial class Room : Entity, IAggregateRoot
+public partial class Room : Entity
 {
     public Room(string name, RoomClassification classification, RoomType type, Guid projectId)
     {
@@ -27,7 +27,6 @@ public partial class Room : Entity, IAggregateRoot
     public GeneralSocketsVo GeneralSockets { get; private set; }
 
     public Guid ProjectId { get; private set; }
-    public Project Project { get; private set; } = null!;
     
     public void ChangeMeasurements(decimal perimeter, decimal area, int modifier)
     {
@@ -39,5 +38,16 @@ public partial class Room : Entity, IAggregateRoot
         
         Lighting = new LightingVo(area);
         GeneralSockets = new GeneralSocketsVo(perimeter, modifier, Type is RoomType.Wet);
+    }
+
+    public void Update(string name, RoomClassification classification, RoomType type)
+    {
+        Throw.When.NullOrEmpty(name, "Room name cannot be null or empty.");
+        Throw.When.Null(classification, "Room classification cannot be null.");
+        Throw.When.Null(type, "Room type cannot be null.");
+
+        Name = name;
+        Classification = classification;
+        Type = type;
     }
 }

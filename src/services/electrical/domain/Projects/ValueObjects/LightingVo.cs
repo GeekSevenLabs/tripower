@@ -1,4 +1,4 @@
-﻿namespace TriPower.Electrical.Domain.Rooms;
+﻿namespace TriPower.Electrical.Domain.Projects.ValueObjects;
 
 /// <summary>
 /// Minimum lighting load in VA (Volt-Amperes) for the room based on NBR 5410 standards.

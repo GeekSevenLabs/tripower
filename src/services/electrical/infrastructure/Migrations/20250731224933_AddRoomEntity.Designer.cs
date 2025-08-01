@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TriPower.Electrical.Infrastructure.Contexts;
 
@@ -11,9 +12,11 @@ using TriPower.Electrical.Infrastructure.Contexts;
 namespace TriPower.Electrical.Infrastructure.Migrations
 {
     [DbContext(typeof(TriElectricalDbContext))]
-    partial class TriElectricalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250731224933_AddRoomEntity")]
+    partial class AddRoomEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,7 +25,40 @@ namespace TriPower.Electrical.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("TriPower.Electrical.Domain.Projects.Entities.Room", b =>
+            modelBuilder.Entity("TriPower.Electrical.Domain.Projects.Project", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("Phases")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Voltage")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Projects");
+                });
+
+            modelBuilder.Entity("TriPower.Electrical.Domain.Rooms.Room", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -60,48 +96,15 @@ namespace TriPower.Electrical.Infrastructure.Migrations
                     b.ToTable("Rooms");
                 });
 
-            modelBuilder.Entity("TriPower.Electrical.Domain.Projects.Project", b =>
+            modelBuilder.Entity("TriPower.Electrical.Domain.Rooms.Room", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTimeOffset>("CreatedAt")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<int>("Phases")
-                        .HasColumnType("int");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("Voltage")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Projects");
-                });
-
-            modelBuilder.Entity("TriPower.Electrical.Domain.Projects.Entities.Room", b =>
-                {
-                    b.HasOne("TriPower.Electrical.Domain.Projects.Project", null)
+                    b.HasOne("TriPower.Electrical.Domain.Projects.Project", "Project")
                         .WithMany("Rooms")
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.OwnsOne("TriPower.Electrical.Domain.Projects.ValueObjects.GeneralSocketsVo", "GeneralSockets", b1 =>
+                    b.OwnsOne("TriPower.Electrical.Domain.Rooms.GeneralSocketsVo", "GeneralSockets", b1 =>
                         {
                             b1.Property<Guid>("RoomId")
                                 .HasColumnType("uniqueidentifier");
@@ -129,7 +132,7 @@ namespace TriPower.Electrical.Infrastructure.Migrations
                                 .HasForeignKey("RoomId");
                         });
 
-                    b.OwnsOne("TriPower.Electrical.Domain.Projects.ValueObjects.LightingVo", "Lighting", b1 =>
+                    b.OwnsOne("TriPower.Electrical.Domain.Rooms.LightingVo", "Lighting", b1 =>
                         {
                             b1.Property<Guid>("RoomId")
                                 .HasColumnType("uniqueidentifier");
@@ -150,6 +153,8 @@ namespace TriPower.Electrical.Infrastructure.Migrations
 
                     b.Navigation("Lighting")
                         .IsRequired();
+
+                    b.Navigation("Project");
                 });
 
             modelBuilder.Entity("TriPower.Electrical.Domain.Projects.Project", b =>

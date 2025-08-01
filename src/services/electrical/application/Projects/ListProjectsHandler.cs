@@ -2,7 +2,7 @@
 
 namespace TriPower.Electrical.Application.Projects;
 
-public class ListProjectsHandler(IProductQueries queries, IUserContext userContext) : IHandler<ListProjectsRequest, ListProjectsResponse>
+public class ListProjectsHandler(IProjectQueries queries, IUserContext userContext) : IHandler<ListProjectsRequest, ListProjectsResponse>
 {
     public Task<ListProjectsResponse> HandleAsync(ListProjectsRequest request, CancellationToken cancellationToken = default)
     {

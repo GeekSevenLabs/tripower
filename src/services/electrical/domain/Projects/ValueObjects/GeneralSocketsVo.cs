@@ -1,4 +1,4 @@
-﻿namespace TriPower.Electrical.Domain.Rooms;
+﻿namespace TriPower.Electrical.Domain.Projects.ValueObjects;
 
 /// <summary>
 /// Represents the general socket load and count for a room based on NBR 5410 standards.

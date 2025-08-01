@@ -1,5 +1,5 @@
 ﻿using TriPower.Electrical.Domain.Projects;
-using TriPower.Electrical.Domain.Rooms;
+using TriPower.Electrical.Domain.Projects.Entities;
 using TriPower.Electrical.Infrastructure.Configurations;
 
 namespace TriPower.Electrical.Infrastructure.Contexts;

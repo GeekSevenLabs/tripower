@@ -2,7 +2,7 @@
 
 @using TriPower.Electrical.Domain.Shared
 
-<TriPage Title="Criar Projeto" BackLink="/projects">
+<TriPage Title="Criar Projeto" BackLink="@BackLink">
     <Body>
     <TriEditForm Model="Request" Validator="Validator" OnValidSubmit="HandleValidSubmitAsync">
         
@@ -30,7 +30,7 @@
             </Content>
         </TriSection>
 
-        <TriCommandBar BackLink="/projects">
+        <TriCommandBar BackLink="@BackLink">
 
             <MudButton
                 Variant="Variant.Filled" Color="Color.Primary" ButtonType="ButtonType.Submit"
