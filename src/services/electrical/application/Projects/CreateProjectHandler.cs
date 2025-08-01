@@ -2,7 +2,7 @@
 using TriPower.Electrical.Domain;
 using TriPower.Electrical.Domain.Projects;
 
-namespace TriPower.Electrical.Application.Projects.Create;
+namespace TriPower.Electrical.Application.Projects;
 
 public class CreateProjectHandler(
     IProjectRepository repository, 

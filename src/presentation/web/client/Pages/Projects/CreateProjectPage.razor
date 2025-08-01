@@ -1,0 +1,44 @@
+﻿@page "/projects/create"
+
+@using TriPower.Electrical.Domain.Shared
+
+<TriPage Title="Criar Projeto" BackLink="/projects">
+    <Body>
+    <TriEditForm Model="Request" Validator="Validator" OnValidSubmit="HandleValidSubmitAsync">
+        
+        <TriSection Label="Identificação">
+            <Content>
+                <TriGrid>
+                    <TriTextField @bind-Value="Request.Name" Label="Nome do Projeto"/>
+                    <TriTextField @bind-Value="Request.Description" Label="Descrição do Projeto" Lines="4"/>
+                </TriGrid>
+            </Content>
+        </TriSection>
+
+        <TriSection Label="Alimentação">
+            <Content>
+                <TriGrid ColsMd="2">
+                    <TriEnumSelectField TEnum="VoltageType" Label="Tensão" @bind-Value="Request.Voltage"/>
+                    <TriEnumSelectField TEnum="PhaseType" Label="Fases" @bind-Value="Request.Phases"/>
+                </TriGrid>
+            </Content>
+        </TriSection>
+
+        <TriSection Label="Validações">
+            <Content>
+                <ValidationSummary/>
+            </Content>
+        </TriSection>
+
+        <TriCommandBar BackLink="/projects">
+
+            <MudButton
+                Variant="Variant.Filled" Color="Color.Primary" ButtonType="ButtonType.Submit"
+                StartIcon="@Icons.Material.Filled.Save">
+                Gravar
+            </MudButton>
+
+        </TriCommandBar>
+    </TriEditForm>
+    </Body>
+</TriPage>

@@ -31,8 +31,16 @@ public class ProjectConfiguration : IEntityTypeConfiguration<Project>
             .IsRequired();
 
         // Relationships
+        
         builder
             .Property(project => project.UserId)
             .IsRequired();
+
+        builder
+            .HasMany(project => project.Rooms)
+            .WithOne(room => room.Project)
+            .HasForeignKey(room => room.ProjectId)
+            .HasPrincipalKey(project => project.Id)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using TriPower.Electrical.Application.Shared.Projects.Create;
+using TriPower.Electrical.Application.Shared.Projects.Get;
 using TriPower.Electrical.Application.Shared.Projects.List;
 
 namespace TriPower.Electrical.Application.Shared;
@@ -9,6 +10,7 @@ public class TriElectricalRequestContext : IRequestContext
     {
         registry
             .Register(new ListProjectsConfiguration())
+            .Register(new GetProjectConfiguration())
             .Register(new CreateProjectConfiguration());
     }
 }

@@ -1,0 +1,62 @@
+﻿@page "/projects/{Id:guid}"
+
+<TriPage Title="Projeto" BackLink="/projects">
+    <Body>
+    <TriLoader Load="LoadAsync" CanRetry>
+        
+        <TriSection Label="Detalhes">
+            <Content>
+                <TriGrid ColsSm="2" ColsMd="2" ColsXl="3">
+                    <TriDataDisplay Label="Nome">@_project.Name</TriDataDisplay>
+                    <TriDataDisplay Label="Tensão">@_project.Voltage.DisplayName</TriDataDisplay>
+                    <TriDataDisplay Label="Fases">@_project.Phases.DisplayName</TriDataDisplay>
+                    <TriDataDisplay Class="tw:col-span-full" Label="Descrição">@_project.Description</TriDataDisplay>
+                </TriGrid>
+            </Content>
+        </TriSection>
+        
+        <TriSection Label="Cômodos">
+            <CommandBar>
+                <MudButton 
+                    Variant="Variant.Outlined" Size="Size.Small" Color="Color.Primary" Href="@($"/projects/{_project.Id}/rooms/create")"
+                    StartIcon="@Icons.Material.Filled.Add">
+                    Novo
+                </MudButton>
+            </CommandBar>
+            <Content>
+
+                <MudTable Items="_project.Rooms" Hover Dense Bordered Elevation="0" Striped Square>
+                    <HeaderContent>
+                        <MudTh>Nome</MudTh>
+                        <MudTh>Garga Iluminação</MudTh>
+                        <MudTh>Carga TUGs</MudTh>
+                        <MudTh>Qtd TUGs</MudTh>
+                        <MudTh>Modificador TUGs</MudTh>
+                        <MudTh>Carga TUGS Corrigida</MudTh>
+                        <MudTh>Qtd TUGs Corrigidas</MudTh>
+                    </HeaderContent>
+                    <RowTemplate Context="room">
+                        <MudTd DataLabel="Name">@room.Name</MudTd>
+                        <MudTd DataLabel="Garga Iluminação">@room.LightingMinimumLoad VA</MudTd>
+                        <MudTd DataLabel="Carga TUGs">@room.RequiredGeneralSocketsLoad VA</MudTd>
+                        <MudTd DataLabel="Qtd TUGs">@room.RequiredGeneralSocketsCount</MudTd>
+                        <MudTd DataLabel="Modificador TUGs">@room.GeneralSocketsModifier</MudTd>
+                        <MudTd DataLabel="Carga TUGS Corrigida">@room.CorrectedGeneralSocketsLoad VA</MudTd>
+                        <MudTd DataLabel="Qtd TUGs Corrigidas">@room.CorrectedGeneralSocketsCount</MudTd>
+                    </RowTemplate>
+                    <NoRecordsContent>
+                        <MudText>Nenhum cômodo encontrado para esse projeto.</MudText>
+                    </NoRecordsContent>
+                </MudTable>
+
+            </Content>
+        </TriSection>
+        
+    </TriLoader>
+    
+    <TriCommandBar BackLink="/projects"/>
+    
+    </Body>
+</TriPage>
+
+

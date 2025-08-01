@@ -1,4 +1,6 @@
 ﻿using TriPower.Electrical.Application.Projects;
+using TriPower.Electrical.Application.Shared;
+using TriPower.Electrical.Application.Shared.Projects.Get;
 using TriPower.Electrical.Application.Shared.Projects.List;
 using TriPower.Electrical.Infrastructure.Contexts;
 
@@ -52,6 +54,7 @@ internal class ProductQueries(TriElectricalDbContext db) : IProductQueries
         var projects = await query
             .Select(project => new ListProjectsResponseItem
             {
+                Id = project.Id,
                 Name = project.Name,
                 Description = project.Description,
                 Voltage = project.Voltage,
@@ -64,5 +67,39 @@ internal class ProductQueries(TriElectricalDbContext db) : IProductQueries
             TotalItems = totalItems,
             Items = projects
         };
+    }
+
+    public async Task<GetProjectResponse> GetAsync(GetProjectRequest request, Guid userId, CancellationToken cancellationToken = default)
+    {
+        return await db
+            .Projects
+            .AsNoTracking()
+            .Where(project => project.UserId == userId && project.Id == request.Id)
+            .Select(project => new GetProjectResponse
+            {
+                Id = project.Id,
+                Name = project.Name,
+                Description = project.Description,
+                Voltage = project.Voltage,
+                Phases = project.Phases,
+                Rooms = project.Rooms.Select(room => new RoomDto
+                    {
+                        Id = room.Id,
+                        Name = room.Name,
+                        Perimeter = room.Perimeter,
+                        Area = room.Area,
+                        Type = room.Type,
+                        Classification = room.Classification,
+                        LightingMinimumLoad = room.Lighting.MinimumLoad,
+                        RequiredGeneralSocketsCount = room.GeneralSockets.RequiredCount,
+                        RequiredGeneralSocketsLoad = room.GeneralSockets.RequiredLoad,
+                        GeneralSocketsModifier = room.GeneralSockets.Modifier,
+                        CorrectedGeneralSocketsCount = room.GeneralSockets.CorrectedCount,
+                        CorrectedGeneralSocketsLoad = room.GeneralSockets.CorrectedLoad
+                    }
+                    ).ToArray()
+            })
+            .FirstOrDefaultAsync(cancellationToken) 
+            ?? throw new KeyNotFoundException($"Project with ID {request.Id} not found.");
     }
 }

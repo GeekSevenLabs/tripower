@@ -6,7 +6,15 @@
 <TriContainer Class="@Class" >
     <TriStack Gap="TriGap.Small">
         <TriStack Row Justify="TriJustify.SpaceBetween" Align="TriAlign.End" Wrap="TriWrap.Wrap">
-            <MudText Typo="Typo.h2">@Title</MudText>
+            <TriStack Row Align="TriAlign.Center" Wrap="TriWrap.NoWrap">
+                @if(BackLink?.IsNotEmptyOrWhiteSpace is true)
+                {
+                    <MudIconButton
+                        Icon="@Icons.Material.Filled.ChevronLeft" Color="Color.Primary" Variant="Variant.Text"
+                        Href="@BackLink" ButtonType="ButtonType.Button"/>
+                }
+                <MudText Typo="Typo.h4">@Title</MudText>
+            </TriStack>
             <div>
                 @CommandBar
             </div>

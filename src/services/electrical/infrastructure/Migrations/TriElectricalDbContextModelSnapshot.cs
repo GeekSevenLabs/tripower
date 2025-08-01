@@ -54,6 +54,110 @@ namespace TriPower.Electrical.Infrastructure.Migrations
 
                     b.ToTable("Projects");
                 });
+
+            modelBuilder.Entity("TriPower.Electrical.Domain.Rooms.Room", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("Area")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("Classification")
+                        .HasColumnType("int");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<decimal>("Perimeter")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<Guid>("ProjectId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProjectId");
+
+                    b.ToTable("Rooms");
+                });
+
+            modelBuilder.Entity("TriPower.Electrical.Domain.Rooms.Room", b =>
+                {
+                    b.HasOne("TriPower.Electrical.Domain.Projects.Project", "Project")
+                        .WithMany("Rooms")
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.OwnsOne("TriPower.Electrical.Domain.Rooms.GeneralSocketsVo", "GeneralSockets", b1 =>
+                        {
+                            b1.Property<Guid>("RoomId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<int>("CorrectedCount")
+                                .HasColumnType("int");
+
+                            b1.Property<int>("CorrectedLoad")
+                                .HasColumnType("int");
+
+                            b1.Property<int>("Modifier")
+                                .HasColumnType("int");
+
+                            b1.Property<int>("RequiredCount")
+                                .HasColumnType("int");
+
+                            b1.Property<int>("RequiredLoad")
+                                .HasColumnType("int");
+
+                            b1.HasKey("RoomId");
+
+                            b1.ToTable("Rooms");
+
+                            b1.WithOwner()
+                                .HasForeignKey("RoomId");
+                        });
+
+                    b.OwnsOne("TriPower.Electrical.Domain.Rooms.LightingVo", "Lighting", b1 =>
+                        {
+                            b1.Property<Guid>("RoomId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<int>("MinimumLoad")
+                                .HasColumnType("int");
+
+                            b1.HasKey("RoomId");
+
+                            b1.ToTable("Rooms");
+
+                            b1.WithOwner()
+                                .HasForeignKey("RoomId");
+                        });
+
+                    b.Navigation("GeneralSockets")
+                        .IsRequired();
+
+                    b.Navigation("Lighting")
+                        .IsRequired();
+
+                    b.Navigation("Project");
+                });
+
+            modelBuilder.Entity("TriPower.Electrical.Domain.Projects.Project", b =>
+                {
+                    b.Navigation("Rooms");
+                });
 #pragma warning restore 612, 618
         }
     }

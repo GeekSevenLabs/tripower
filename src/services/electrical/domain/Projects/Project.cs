@@ -1,7 +1,12 @@
-﻿namespace TriPower.Electrical.Domain.Projects;
+﻿using TriPower.Electrical.Domain.Rooms;
 
-public class Project : Entity, IAggregateRoot
+namespace TriPower.Electrical.Domain.Projects;
+
+[HasPrivateEmptyConstructor]
+public partial class Project : Entity, IAggregateRoot
 {
+    private readonly List<Room> _rooms = [];
+    
     public Project(string name, string description, VoltageType voltage, PhaseType phases, Guid userId)
     {
         Throw.When.NullOrEmpty(name, "Project name cannot be null or empty.");
@@ -19,5 +24,8 @@ public class Project : Entity, IAggregateRoot
     public string Description { get; private set; }
     public VoltageType Voltage { get; private set; }
     public PhaseType Phases { get; private set; }
+    
+    public IReadOnlyCollection<Room> Rooms => _rooms.AsReadOnly();
+    
     public Guid UserId { get; private set; }
 }

@@ -1,0 +1,21 @@
+﻿@namespace TriPower
+@inherits TriComponentBase
+
+@typeparam TEnum where TEnum : struct, Enum
+
+<MudSelect
+    T="TEnum?"
+    Label="@Label" 
+    Value="Value" ValueChanged="OnValueChangedAsync" For="ValueExpression"
+    Variant="Variant.Outlined"
+    Class="@Class" Style="@Style" UserAttributes="UserAttributes"
+    Required="Required" Disabled="Disabled" ReadOnly="ReadOnly">
+
+    @foreach (var item in Enum.GetValues(typeof(TEnum)).Cast<TEnum>())
+    {
+        <MudSelectItem T="TEnum?" Value="@item">
+            @(UseShortName ? item.DisplayShortName : item.DisplayName)
+        </MudSelectItem>
+    }
+
+</MudSelect>

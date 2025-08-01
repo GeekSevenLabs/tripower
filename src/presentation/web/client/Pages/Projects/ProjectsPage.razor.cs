@@ -4,14 +4,11 @@ namespace TriPower.Presentation.Web.Client.Pages.Projects;
 
 public partial class ProjectsPage : ComponentBase
 {
-    [Inject] public required IHandlerMediator Mediator { get; set; }
+    [Inject] public required IHandlerMediator Mediator { get; init; }
     
     private MudTable<ListProjectsResponseItem> _table = null!;
     private string _searchString = string.Empty;
-
-    /// <summary>
-    /// Here we simulate getting the paged, filtered and ordered data from the server
-    /// </summary>
+    
     private async Task<TableData<ListProjectsResponseItem>> ServerReloadAsync(TableState state, CancellationToken token)
     {
         var response = await Mediator.SendAsync<ListProjectsRequest, ListProjectsResponse>(

@@ -1,9 +1,8 @@
 ﻿namespace TriPower.Identity.Domain.Users;
 
-public record NameVo
+[HasPrivateEmptyConstructor]
+public partial class NameVo
 {
-    public NameVo() { }
-    
     public NameVo(string firstName, string lastName)
     {
         Throw.When.Empty(firstName, "First name cannot be empty.");
