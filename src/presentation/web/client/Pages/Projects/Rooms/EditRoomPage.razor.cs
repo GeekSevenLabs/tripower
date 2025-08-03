@@ -1,5 +1,6 @@
 ﻿using TriPower.Electrical.Application.Shared.Projects.EditRoom;
 using TriPower.Electrical.Application.Shared.Projects.GetRoom;
+using TriPower.Electrical.Domain.Shared;
 
 namespace TriPower.Presentation.Web.Client.Pages.Projects.Rooms;
 
@@ -15,7 +16,7 @@ public partial class EditRoomPage : ComponentBase
     [Inject] public required NavigationManager Navigation { get; init; }
     
     [Parameter] public required Guid ProjectId { get; init; }
-    [Parameter] public required Guid? RoomId { get; init; }
+    [Parameter] public Guid? RoomId { get; set; }
 
     private async Task LoadAsync()
     {
@@ -39,5 +40,11 @@ public partial class EditRoomPage : ComponentBase
             .ShowSuccess("Room edited successfully!");
         
         Navigation.NavigateTo(BackLink);
+    }
+
+    private void ChangeType()
+    {
+        Request.Type = Request.Classification.GetRoomType();
+        StateHasChanged();
     }
 }

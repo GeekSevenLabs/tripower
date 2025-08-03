@@ -1,5 +1,5 @@
 ﻿@page "/projects/{ProjectId:guid}/rooms/new"
-@page "/projects/{ProjectId:guid}/rooms/{RoomId}"
+@page "/projects/{ProjectId:guid}/rooms/{RoomId:guid}"
 @using TriPower.Electrical.Domain.Shared
 
 <TriPage
@@ -27,14 +27,15 @@
                     <TriGrid ColsSm="2">
                         <TriEnumSelectField
                             TEnum="RoomClassification" Label="Classificação do ambiente"
-                            @bind-Value="@Request.Classification"/>
+                            @bind-Value="@Request.Classification" @bind-Value:after="ChangeType"/>
                         <TriEnumSelectField
-                            TEnum="RoomType" Label="Tipo do ambiente" @bind-Value="@Request.Type"/>
+                            TEnum="RoomType" Label="Tipo do ambiente" 
+                            @bind-Value="@Request.Type" ReadOnly Disabled />
                     </TriGrid>
                 </Content>
             </TriSection>
 
-            <TriSection Label="Carga">
+            <TriSection Label="Carga - Tomadas de Uso Geral (TUGs)">
                 <Content>
                     <TriGrid>
                         <TriIntegerField
@@ -42,14 +43,7 @@
                             Label="Modificador"
                             HelperText="Server para ajustar a quantidade de tomadas TUGs para + ou -"/>
                     </TriGrid>
-                    <TriGrid ColsMd="3">
-
-                        @if (Request.CanCalculateLighting)
-                        {
-                            <TriDataDisplay Label="Carga Iluminação Recomendada">
-                                @LightingMath.CalculateMinimumLoad(Request.Area.GetValueOrDefault())
-                            </TriDataDisplay>
-                        }
+                    <TriGrid ColsMd="2">
 
                         @if (Request.CanCalculateSockets)
                         {
@@ -59,15 +53,25 @@
                                 Request.Type is RoomType.Wet
                             );
 
-                            <TriDataDisplay
-                                Label="Quantidade TUGs Recomendada">@generalSockets.RequiredCount</TriDataDisplay>
-                            <TriDataDisplay Label="Carga TUGs Recomendada">@generalSockets.RequiredLoad</TriDataDisplay>
+                            <TriDataDisplay Label="Quantidade TUGs Recomendada">@generalSockets.RequiredCount Tomada(s)</TriDataDisplay>
+                            <TriDataDisplay Label="Carga TUGs Recomendada">@generalSockets.RequiredLoad VA</TriDataDisplay>
 
-                            <TriDataDisplay
-                                Label="Quantidade TUGs Corrigida">@generalSockets.CorrectedCount</TriDataDisplay>
-                            <TriDataDisplay Label="Carga TUGs Corrigida">@generalSockets.CorrectedLoad</TriDataDisplay>
+                            <TriDataDisplay Label="Quantidade TUGs Corrigida">@generalSockets.CorrectedCount Tomada(s)</TriDataDisplay>
+                            <TriDataDisplay Label="Carga TUGs Corrigida">@generalSockets.CorrectedLoad VA</TriDataDisplay>
                         }
 
+                    </TriGrid>
+                </Content>
+            </TriSection>
+            
+            <TriSection Label="Carga - Iluminação">
+                <Content>
+                    <TriGrid ColsMd="3">
+
+                        <TriDataDisplay Label="Carga Iluminação Recomendada">
+                                @LightingMath.CalculateMinimumLoad(Request.Area.GetValueOrDefault()) VA
+                        </TriDataDisplay>
+                        
                     </TriGrid>
                 </Content>
             </TriSection>

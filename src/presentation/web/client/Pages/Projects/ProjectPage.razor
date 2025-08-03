@@ -41,7 +41,9 @@
                         <MudTd DataLabel="Garga Iluminação">@room.LightingMinimumLoad VA</MudTd>
                         <MudTd DataLabel="Carga TUGs">@room.RequiredGeneralSocketsLoad VA</MudTd>
                         <MudTd DataLabel="Qtd TUGs">@room.RequiredGeneralSocketsCount</MudTd>
-                        <MudTd DataLabel="Modificador TUGs">@room.GeneralSocketsModifier</MudTd>
+                        <MudTd DataLabel="Modificador TUGs">
+                            <MudText Color="GeneralSocketsModifierColor(room)">@room.GeneralSocketsModifier</MudText>
+                        </MudTd>
                         <MudTd DataLabel="Carga TUGS Corrigida">@room.CorrectedGeneralSocketsLoad VA</MudTd>
                         <MudTd DataLabel="Qtd TUGs Corrigidas">@room.CorrectedGeneralSocketsCount</MudTd>
                         <MudTd DataLabel="#">
