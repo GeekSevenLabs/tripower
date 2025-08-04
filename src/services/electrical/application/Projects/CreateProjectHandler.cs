@@ -14,7 +14,7 @@ public class CreateProjectHandler(
         var project = new Project(
             request.Name!,
             request.Description!,
-            request.Voltage.GetValueOrDefault(),
+            request.VoltageType.GetValueOrDefault(),
             request.Phases.GetValueOrDefault(),
             userContext.UserId
         );

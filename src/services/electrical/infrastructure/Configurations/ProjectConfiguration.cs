@@ -1,4 +1,5 @@
-﻿using TriPower.Electrical.Domain.Projects;
+﻿using TriPower.Electrical.Domain.Circuits;
+using TriPower.Electrical.Domain.Projects;
 
 namespace TriPower.Electrical.Infrastructure.Configurations;
 
@@ -20,7 +21,7 @@ public class ProjectConfiguration : IEntityTypeConfiguration<Project>
             .HasMaxLength(500);
 
         builder
-            .Property(project => project.Voltage)
+            .Property(project => project.VoltageType)
             .IsRequired();
         
         builder
@@ -41,6 +42,13 @@ public class ProjectConfiguration : IEntityTypeConfiguration<Project>
             .HasMany(project => project.Rooms)
             .WithOne()
             .HasForeignKey(room => room.ProjectId)
+            .HasPrincipalKey(project => project.Id)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        builder
+            .HasMany(project => project.Circuits)
+            .WithOne()
+            .HasForeignKey(circuit => circuit.ProjectId)
             .HasPrincipalKey(project => project.Id)
             .OnDelete(DeleteBehavior.Cascade);
     }

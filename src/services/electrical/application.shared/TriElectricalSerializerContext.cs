@@ -1,4 +1,5 @@
-﻿using TriPower.Electrical.Application.Shared.Projects.Create;
+﻿using TriPower.Electrical.Application.Shared.Circuits.Create;
+using TriPower.Electrical.Application.Shared.Projects.Create;
 using TriPower.Electrical.Application.Shared.Projects.EditRoom;
 using TriPower.Electrical.Application.Shared.Projects.Get;
 using TriPower.Electrical.Application.Shared.Projects.GetRoom;
@@ -19,6 +20,12 @@ namespace TriPower.Electrical.Application.Shared;
 [JsonSerializable(typeof(EditRoomRequest))]
 [JsonSerializable(typeof(GetRoomRequest))]
 [JsonSerializable(typeof(GetRoomResponse))]
+
+#endregion
+
+#region Circuits
+
+[JsonSerializable(typeof(CreateCircuitRequest))]
 
 #endregion
 

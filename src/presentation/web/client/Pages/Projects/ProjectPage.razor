@@ -8,7 +8,7 @@
             <Content>
                 <TriGrid ColsSm="2" ColsMd="2" ColsXl="3">
                     <TriDataDisplay Label="Nome">@_project.Name</TriDataDisplay>
-                    <TriDataDisplay Label="Tensão">@_project.Voltage.DisplayName</TriDataDisplay>
+                    <TriDataDisplay Label="Tensão">@_project.VoltageType.DisplayName</TriDataDisplay>
                     <TriDataDisplay Label="Fases">@_project.Phases.DisplayName</TriDataDisplay>
                     <TriDataDisplay Class="tw:col-span-full" Label="Descrição">@_project.Description</TriDataDisplay>
                 </TriGrid>
@@ -54,6 +54,111 @@
                     </RowTemplate>
                     <NoRecordsContent>
                         <MudText>Nenhum cômodo encontrado para esse projeto.</MudText>
+                    </NoRecordsContent>
+                </MudTable>
+
+            </Content>
+        </TriSection>
+        
+        <TriSection Label="Circuitos de Iluminação">
+            <CommandBar>
+                <MudButton 
+                    Variant="Variant.Outlined" Size="Size.Small" Color="Color.Primary" Href="@($"/projects/{_project.Id}/circuits/lighting/new")"
+                    StartIcon="@Icons.Material.Filled.Add">
+                    Novo
+                </MudButton>
+            </CommandBar>
+            <Content>
+
+                <MudTable Items="_project.LightingCircuits" Hover Dense Bordered Elevation="0" Striped Square>
+                    <HeaderContent>
+                        <MudTh>Nome</MudTh>
+                        <MudTh>Tensão / Modo de Uso</MudTh>
+                        <MudTh>Tensão</MudTh>
+                        <MudTh>#</MudTh>
+                    </HeaderContent>
+                    <RowTemplate Context="circuit">
+                        <MudTd DataLabel="Name">@circuit.Name</MudTd>
+                        <MudTd DataLabel="Tensão / Modo de Uso">@circuit.VoltageMode.DisplayName</MudTd>
+                        <MudTd DataLabel="Tensão">@circuit.Voltage V</MudTd>
+                        <MudTd DataLabel="#">
+                            <MudIconButton
+                                Icon="@Icons.Material.Filled.Edit" Color="Color.Primary" 
+                                Href="@($"/projects/{_project.Id}/circuits/lighting/{circuit.Id}")"/>
+                        </MudTd>
+                    </RowTemplate>
+                    <NoRecordsContent>
+                        <MudText>Nenhum circuito de iluminação encontrado para esse projeto.</MudText>
+                    </NoRecordsContent>
+                </MudTable>
+
+            </Content>
+        </TriSection>
+        
+        <TriSection Label="Circuitos de Tomadas de Uso Geral (TUGs)">
+            <CommandBar>
+                <MudButton 
+                    Variant="Variant.Outlined" Size="Size.Small" Color="Color.Primary" Href="@($"/projects/{_project.Id}/circuits/general-sockets/new")"
+                    StartIcon="@Icons.Material.Filled.Add">
+                    Novo
+                </MudButton>
+            </CommandBar>
+            <Content>
+
+                <MudTable Items="_project.GeneralSocketsCircuits" Hover Dense Bordered Elevation="0" Striped Square>
+                    <HeaderContent>
+                        <MudTh>Nome</MudTh>
+                        <MudTh>Tensão / Modo de Uso</MudTh>
+                        <MudTh>Tensão</MudTh>
+                        <MudTh>#</MudTh>
+                    </HeaderContent>
+                    <RowTemplate Context="circuit">
+                        <MudTd DataLabel="Name">@circuit.Name</MudTd>
+                        <MudTd DataLabel="Tensão / Modo de Uso">@circuit.VoltageMode.DisplayName</MudTd>
+                        <MudTd DataLabel="Tensão">@circuit.Voltage V</MudTd>
+                        <MudTd DataLabel="#">
+                            <MudIconButton
+                                Icon="@Icons.Material.Filled.Edit" Color="Color.Primary" 
+                                Href="@($"/projects/{_project.Id}/circuits/lighting/{circuit.Id}")"/>
+                        </MudTd>
+                    </RowTemplate>
+                    <NoRecordsContent>
+                        <MudText>Nenhum circuito de tomadas de uso geral encontrado para esse projeto.</MudText>
+                    </NoRecordsContent>
+                </MudTable>
+
+            </Content>
+        </TriSection>
+        
+        <TriSection Label="Circuitos de Tomadas de Uso Especifico (TUEs)">
+            <CommandBar>
+                <MudButton 
+                    Variant="Variant.Outlined" Size="Size.Small" Color="Color.Primary" Href="@($"/projects/{_project.Id}/circuits/specific-socket/new")"
+                    StartIcon="@Icons.Material.Filled.Add">
+                    Novo
+                </MudButton>
+            </CommandBar>
+            <Content>
+
+                <MudTable Items="_project.SpecificCircuits" Hover Dense Bordered Elevation="0" Striped Square>
+                    <HeaderContent>
+                        <MudTh>Nome</MudTh>
+                        <MudTh>Tensão / Modo de Uso</MudTh>
+                        <MudTh>Tensão</MudTh>
+                        <MudTh>#</MudTh>
+                    </HeaderContent>
+                    <RowTemplate Context="circuit">
+                        <MudTd DataLabel="Name">@circuit.Name</MudTd>
+                        <MudTd DataLabel="Tensão / Modo de Uso">@circuit.VoltageMode.DisplayName</MudTd>
+                        <MudTd DataLabel="Tensão">@circuit.Voltage V</MudTd>
+                        <MudTd DataLabel="#">
+                            <MudIconButton
+                                Icon="@Icons.Material.Filled.Edit" Color="Color.Primary" 
+                                Href="@($"/projects/{_project.Id}/circuits/lighting/{circuit.Id}")"/>
+                        </MudTd>
+                    </RowTemplate>
+                    <NoRecordsContent>
+                        <MudText>Nenhum circuito de tomadas de uso especifico encontrado para esse projeto.</MudText>
                     </NoRecordsContent>
                 </MudTable>
 

@@ -1,10 +1,13 @@
-﻿using TriPower.Electrical.Domain.Projects.ValueObjects;
+﻿using TriPower.Electrical.Domain.Circuits;
+using TriPower.Electrical.Domain.Projects.ValueObjects;
 
 namespace TriPower.Electrical.Domain.Projects.Entities;
 
 [HasPrivateEmptyConstructor]
 public partial class Room : Entity
 {
+    private readonly List<Circuit> _circuits = [];
+    
     public Room(string name, RoomClassification classification, RoomType type, Guid projectId)
     {
         Name = name;
@@ -27,6 +30,7 @@ public partial class Room : Entity
     public GeneralSocketsVo GeneralSockets { get; private set; }
 
     public Guid ProjectId { get; private set; }
+    public IReadOnlyCollection<Circuit> Circuits => _circuits.AsReadOnly();
     
     public void ChangeMeasurements(decimal perimeter, decimal area, int modifier)
     {

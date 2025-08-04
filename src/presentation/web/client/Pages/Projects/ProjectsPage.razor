@@ -21,13 +21,13 @@
         </ToolBarContent>
         <HeaderContent>
             <MudTh><MudTableSortLabel SortLabel="@nameof(ListProjectsResponseItem.Name)" T="ListProjectsResponseItem">Nome</MudTableSortLabel></MudTh>
-            <MudTh><MudTableSortLabel SortLabel="@nameof(ListProjectsResponseItem.Voltage)" T="ListProjectsResponseItem">Tensão</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortLabel="@nameof(ListProjectsResponseItem.VoltageType)" T="ListProjectsResponseItem">Tensão</MudTableSortLabel></MudTh>
             <MudTh><MudTableSortLabel SortLabel="@nameof(ListProjectsResponseItem.Phases)" T="ListProjectsResponseItem">Fases</MudTableSortLabel></MudTh>
             <MudTh>#</MudTh>
         </HeaderContent>
         <RowTemplate>
             <MudTd DataLabel="Nome">@context.Name</MudTd>
-            <MudTd DataLabel="Tensão">@context.Voltage.DisplayShortName</MudTd>
+            <MudTd DataLabel="Tensão">@context.VoltageType.DisplayShortName</MudTd>
             <MudTd DataLabel="Fases">@context.Phases.DisplayName</MudTd>
             <MudTd DataLabel="#">
                 <MudIconButton 

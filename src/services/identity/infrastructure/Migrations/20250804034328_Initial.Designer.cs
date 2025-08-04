@@ -13,7 +13,7 @@ using TriPower.Identity.Infrastructure.Contexts;
 namespace TriPower.Identity.Infrastructure.Migrations
 {
     [DbContext(typeof(TriIdentityDbContext))]
-    [Migration("20250729235714_Initial")]
+    [Migration("20250804034328_Initial")]
     partial class Initial
     {
         /// <inheritdoc />

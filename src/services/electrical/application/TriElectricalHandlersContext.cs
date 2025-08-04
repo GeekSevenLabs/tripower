@@ -1,4 +1,6 @@
-﻿using TriPower.Electrical.Application.Projects;
+﻿using TriPower.Electrical.Application.Circuits;
+using TriPower.Electrical.Application.Projects;
+using TriPower.Electrical.Application.Shared.Circuits.Create;
 using TriPower.Electrical.Application.Shared.Projects.Create;
 using TriPower.Electrical.Application.Shared.Projects.EditRoom;
 using TriPower.Electrical.Application.Shared.Projects.Get;
@@ -16,6 +18,8 @@ public class TriElectricalHandlersContext : IHandlersContext
             .Register<GetProjectHandler, GetProjectRequest, GetProjectResponse>()
             .Register<CreateProjectHandler, CreateProjectRequest>()
             .Register<EditRoomHandler, EditRoomRequest>()
-            .Register<GetRoomHandler, GetRoomRequest, GetRoomResponse>();
+            .Register<GetRoomHandler, GetRoomRequest, GetRoomResponse>()
+
+            .Register<CreateCircuitHandler, CreateCircuitRequest>();
     }
 }

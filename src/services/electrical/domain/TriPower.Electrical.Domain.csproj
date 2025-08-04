@@ -13,4 +13,8 @@
         <ProjectReference Include="..\domain.shared\TriPower.Electrical.Domain.Shared.csproj"/>
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Circuits\Entities\" />
+    </ItemGroup>
+
 </Project>
