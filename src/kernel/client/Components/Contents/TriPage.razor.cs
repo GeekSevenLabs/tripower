@@ -8,5 +8,7 @@ public partial class TriPage : TriComponentBase
     [Parameter] public RenderFragment? CommandBar { get; set; }
     [Parameter, EditorRequired] public required RenderFragment Body { get; set; }
     
+    [Parameter] public string? BackLink { get; set; }
+    
     
 }

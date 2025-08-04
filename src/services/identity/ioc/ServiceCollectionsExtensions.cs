@@ -79,8 +79,19 @@ public static class ServiceCollectionsExtensions
                                 var refreshToken = await authenticationCookie.GetRefreshTokenAsync();
                                 if(refreshToken is null) break;
                                 var authentication = context.HttpContext.RequestServices.GetRequiredService<IAuthenticationService>();
-                                var tokens = await authentication.RefreshAuthenticateAsync(refreshToken);
-                                context.Token = tokens.AccessToken.Token;
+
+                                try
+                                {
+                                    var tokens = await authentication.RefreshAuthenticateAsync(refreshToken);
+                                    context.Token = tokens.AccessToken.Token;
+                                }
+                                catch (Exception e)
+                                {
+                                    await authentication.LogoutAsync();
+                                    // logging the exception can be done here if needed
+                                    Console.Write("Refresh Token Erro: {0}", e.Message);
+                                }
+                                
                                 break;
                             }
                             case { IsExpired: false }: context.Token = accessToken.Token; break;

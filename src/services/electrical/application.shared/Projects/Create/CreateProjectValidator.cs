@@ -12,7 +12,7 @@ public class CreateProjectValidator : AbstractValidator<CreateProjectRequest>
             .NotEmpty()
             .MaximumLength(500);
         
-        RuleFor(request => request.Voltage)
+        RuleFor(request => request.VoltageType)
             .NotNull()
             .IsInEnum();
         

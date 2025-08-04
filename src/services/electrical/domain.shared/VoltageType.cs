@@ -8,3 +8,4 @@ public enum VoltageType
     [Display(Name = "220V fase-neutro, 380V fase-fase", ShortName = "220V / 380V")]
     V220V380 = 220,
 }
+

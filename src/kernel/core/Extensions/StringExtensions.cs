@@ -1,4 +1,7 @@
-﻿namespace TriPower;
+﻿
+
+// ReSharper disable once CheckNamespace
+namespace TriPower;
 
 public static class StringExtensions
 {

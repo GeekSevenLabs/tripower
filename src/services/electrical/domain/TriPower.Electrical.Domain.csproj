@@ -9,7 +9,12 @@
 
     <ItemGroup>
         <ProjectReference Include="..\..\..\kernel\domain\TriPower.Kernel.Domain.csproj"/>
+        <ProjectReference Include="..\..\..\kernel\math\TriPower.Kernel.ElectricalMathematics.csproj" />
         <ProjectReference Include="..\domain.shared\TriPower.Electrical.Domain.Shared.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Circuits\Entities\" />
     </ItemGroup>
 
 </Project>

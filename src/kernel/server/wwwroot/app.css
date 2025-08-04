@@ -1,4 +1,5 @@
 /*! tailwindcss v4.1.11 | MIT License | https://tailwindcss.com */
+@layer properties;
 @layer theme, base, components, utilities;
 @layer theme {
   :root, :host {
@@ -7,6 +8,12 @@
     --tw-font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
       "Courier New", monospace;
     --tw-spacing: 0.25rem;
+    --tw-text-sm: 0.875rem;
+    --tw-text-sm--line-height: calc(1.25 / 0.875);
+    --tw-text-lg: 1.125rem;
+    --tw-text-lg--line-height: calc(1.75 / 1.125);
+    --tw-font-weight-thin: 100;
+    --tw-font-weight-bold: 700;
     --tw-default-font-family: var(--tw-font-sans);
     --tw-default-mono-font-family: var(--tw-font-mono);
   }
@@ -157,11 +164,8 @@
   }
 }
 @layer utilities {
-  .tw\:\!mt-6 {
-    margin-top: calc(var(--tw-spacing) * 6) !important;
-  }
-  .tw\:\!mb-4 {
-    margin-bottom: calc(var(--tw-spacing) * 4) !important;
+  .tw\:col-span-full {
+    grid-column: 1 / -1;
   }
   .tw\:flex {
     display: flex;
@@ -262,6 +266,9 @@
   .tw\:gap-0 {
     gap: calc(var(--tw-spacing) * 0);
   }
+  .tw\:gap-1 {
+    gap: calc(var(--tw-spacing) * 1);
+  }
   .tw\:gap-2 {
     gap: calc(var(--tw-spacing) * 2);
   }
@@ -283,20 +290,30 @@
   .tw\:\!py-3 {
     padding-block: calc(var(--tw-spacing) * 3) !important;
   }
-  .tw\:\!py-4 {
-    padding-block: calc(var(--tw-spacing) * 4) !important;
-  }
   .tw\:\!py-6 {
     padding-block: calc(var(--tw-spacing) * 6) !important;
   }
   .tw\:\!py-10 {
     padding-block: calc(var(--tw-spacing) * 10) !important;
   }
-  .tw\:py-6 {
-    padding-block: calc(var(--tw-spacing) * 6);
-  }
   .tw\:\!pt-6 {
     padding-top: calc(var(--tw-spacing) * 6) !important;
+  }
+  .tw\:text-lg {
+    font-size: var(--tw-text-lg);
+    line-height: var(--tw-leading, var(--tw-text-lg--line-height));
+  }
+  .tw\:text-sm {
+    font-size: var(--tw-text-sm);
+    line-height: var(--tw-leading, var(--tw-text-sm--line-height));
+  }
+  .tw\:font-bold {
+    --tw-font-weight: var(--tw-font-weight-bold);
+    font-weight: var(--tw-font-weight-bold);
+  }
+  .tw\:font-thin {
+    --tw-font-weight: var(--tw-font-weight-thin);
+    font-weight: var(--tw-font-weight-thin);
   }
   .tw\:sm\:grid-cols-1 {
     @media (width >= 40rem) {
@@ -544,4 +561,15 @@ html {
 }
 html, body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+@property --tw-font-weight {
+  syntax: "*";
+  inherits: false;
+}
+@layer properties {
+  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {
+    *, ::before, ::after, ::backdrop {
+      --tw-font-weight: initial;
+    }
+  }
 }

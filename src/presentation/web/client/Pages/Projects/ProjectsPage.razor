@@ -1,25 +1,39 @@
 ﻿@page "/projects"
+
 @using TriPower.Electrical.Application.Shared.Projects.List
 
-<TriPage Title="Projetos">
+<TriPage Title="Projetos" BackLink="/overview">
+    <CommandBar>
+        <MudButton 
+            Variant="Variant.Outlined" Size="Size.Small" Color="Color.Primary" Href="/projects/create"
+            StartIcon="@Icons.Material.Filled.Add">
+            Novo
+        </MudButton>
+    </CommandBar>
     <Body>
-    
-    <MudTable ServerData="ServerReloadAsync" Dense="true" Hover="true" @ref="_table">
+
+    <MudTable ServerData="ServerReloadAsync" Dense Hover Elevation="0" Bordered Square Striped @ref="_table">
         <ToolBarContent>
-            <MudText Typo="Typo.h6">Projetos</MudText>
-            <MudSpacer />
-            <MudTextField T="string" ValueChanged="@(s=>OnSearch(s))" Placeholder="Pesquisar" Adornment="Adornment.Start"
-                          AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"/>
+            <MudText Typo="Typo.h6">Em andamento</MudText>
+            <MudSpacer/>
+            <TriTextField T="string" ValueChanged="@(s => OnSearch(s))" Placeholder="Pesquisar" Adornment="Adornment.Start"
+                          AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0" Margin="Margin.Dense"/>
         </ToolBarContent>
         <HeaderContent>
             <MudTh><MudTableSortLabel SortLabel="@nameof(ListProjectsResponseItem.Name)" T="ListProjectsResponseItem">Nome</MudTableSortLabel></MudTh>
-            <MudTh><MudTableSortLabel SortLabel="@nameof(ListProjectsResponseItem.Voltage)" T="ListProjectsResponseItem">Tensão</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortLabel="@nameof(ListProjectsResponseItem.VoltageType)" T="ListProjectsResponseItem">Tensão</MudTableSortLabel></MudTh>
             <MudTh><MudTableSortLabel SortLabel="@nameof(ListProjectsResponseItem.Phases)" T="ListProjectsResponseItem">Fases</MudTableSortLabel></MudTh>
+            <MudTh>#</MudTh>
         </HeaderContent>
         <RowTemplate>
             <MudTd DataLabel="Nome">@context.Name</MudTd>
-            <MudTd DataLabel="Tensão">@context.Voltage</MudTd>
-            <MudTd DataLabel="Fases">@context.Phases</MudTd>
+            <MudTd DataLabel="Tensão">@context.VoltageType.DisplayShortName</MudTd>
+            <MudTd DataLabel="Fases">@context.Phases.DisplayName</MudTd>
+            <MudTd DataLabel="#">
+                <MudIconButton 
+                    Size="Size.Small" Icon="@Icons.Material.Filled.Article" Href="@($"/projects/{context.Id}")" 
+                    ButtonType="ButtonType.Button" Variant="Variant.Text" Color="Color.Primary"/>
+            </MudTd>
         </RowTemplate>
         <NoRecordsContent>
             <MudText>Nenhum projeto encontrado.</MudText>
@@ -28,9 +42,11 @@
             <MudText>Pesquisando...</MudText>
         </LoadingContent>
         <PagerContent>
-            <MudTablePager />
+            <MudTablePager/>
         </PagerContent>
     </MudTable>
     
+    <TriCommandBar BackLink="/overview"/>
+
     </Body>
 </TriPage>
